@@ -34,7 +34,7 @@ Marketing website for SmartPARX, an automated & mechanical car parking systems m
 
 ## Deploying to Cloudflare Pages
 
-This is a fully static site — no server runtime required.
+This is a fully static site - no server runtime required.
 
 ### Option A: Git integration (recommended)
 
@@ -56,9 +56,9 @@ npx wrangler pages deploy dist --project-name=smartparx
 
 ## Environment / content notes
 
-- Contact form (`src/components/ContactForm.astro`) posts to [Web3Forms](https://web3forms.com) — replace the placeholder `access_key` with a real one before going live.
+- Contact form (`src/components/ContactForm.astro`) posts to [Web3Forms](https://web3forms.com) - replace the placeholder `access_key` with a real one before going live.
 - Site-wide contact details, nav links, and copy live in `src/lib/site.ts`.
-- Products are managed as Markdown files in `src/content/products/` — add a new file there to add a new product page.
+- Products are managed as Markdown files in `src/content/products/` - add a new file there to add a new product page.
 - Gallery and product images are currently placeholder icons; replace with real photography under `public/images/` and update the relevant components.
 
 ## CI
