@@ -1,0 +1,97 @@
+---
+import { NAV_LINKS, SITE } from '../lib/site';
+import Button from './Button.astro';
+
+const currentPath = Astro.url.pathname;
+
+function isActive(href: string) {
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+}
+---
+
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-slate-100">
+  <div class="container-px mx-auto flex h-18 max-w-7xl items-center justify-between py-3">
+    <a href="/" class="flex items-center gap-2 font-display text-xl font-bold text-navy-900">
+      <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-navy-900 text-signal-500">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-5 w-5" aria-hidden="true">
+          <path d="M4 20V6a2 2 0 0 1 2-2h6l8 8v8a0 0 0 0 1 0 0H6a2 2 0 0 1-2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M9 20v-5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      SmartPARX
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-8">
+      {NAV_LINKS.map((link) => (
+        <a
+          href={link.href}
+          class={`text-sm font-medium transition-colors hover:text-signal-600 ${
+            isActive(link.href) ? 'text-navy-900 font-semibold' : 'text-navy-600'
+          }`}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="hidden lg:flex items-center gap-3">
+      <a href={`tel:${SITE.phoneLinks[0]}`} class="text-sm font-semibold text-navy-700 hover:text-navy-900">
+        {SITE.phone[0]}
+      </a>
+      <Button href="/contact" size="md">Get a Quote</Button>
+    </div>
+
+    <button
+      id="mobile-menu-toggle"
+      type="button"
+      class="lg:hidden flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-navy-900"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <svg id="icon-open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-5 w-5" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="hidden h-5 w-5" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-100 bg-white">
+    <nav class="container-px mx-auto flex max-w-7xl flex-col gap-1 py-4">
+      {NAV_LINKS.map((link) => (
+        <a
+          href={link.href}
+          class={`rounded-lg px-3 py-2.5 text-base font-medium ${
+            isActive(link.href) ? 'bg-slate-50 text-navy-900 font-semibold' : 'text-navy-700'
+          }`}
+        >
+          {link.label}
+        </a>
+      ))}
+      <div class="mt-2 flex flex-col gap-3 px-3">
+        <a href={`tel:${SITE.phoneLinks[0]}`} class="text-sm font-semibold text-navy-700">
+          Call {SITE.phone[0]}
+        </a>
+        <Button href="/contact" size="md" class="w-full">Get a Quote</Button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('mobile-menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const iconOpen = document.getElementById('icon-open');
+  const iconClose = document.getElementById('icon-close');
+
+  toggle?.addEventListener('click', () => {
+    const isHidden = menu?.classList.contains('hidden');
+    menu?.classList.toggle('hidden');
+    iconOpen?.classList.toggle('hidden');
+    iconClose?.classList.toggle('hidden');
+    toggle.setAttribute('aria-expanded', String(Boolean(isHidden)));
+  });
+</script>

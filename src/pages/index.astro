@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/home/Hero.astro';
+import AboutBrief from '../components/home/AboutBrief.astro';
+import ProductsShowcase from '../components/home/ProductsShowcase.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import Sectors from '../components/Sectors.astro';
+import Faq from '../components/home/Faq.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import { SITE } from '../lib/site';
+---
+
+<Layout title={SITE.name} description={SITE.description}>
+  <Hero />
+  <AboutBrief />
+  <ProductsShowcase />
+  <ProcessSteps />
+  <Sectors />
+  <Faq />
+  <CtaBanner />
+</Layout>

@@ -1,0 +1,94 @@
+---
+const systemTypes = [
+  'Two Level Stacker',
+  'Three Level Stacker',
+  'Pit Parking System',
+  'Puzzle Parking System',
+  'Vertical Circulation System',
+  'Two Wheeler System',
+  'Custom / Not Sure Yet',
+];
+---
+
+<form
+  class="grid grid-cols-1 gap-5 sm:grid-cols-2"
+  action="https://api.web3forms.com/submit"
+  method="POST"
+>
+  <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
+  <input type="hidden" name="subject" value="New inquiry from SmartPARX website" />
+  <input type="checkbox" name="botcheck" class="hidden" style="display: none;" />
+
+  <div>
+    <label for="name" class="block text-sm font-medium text-navy-700">Full Name</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      required
+      class="mt-1.5 w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm text-navy-900 focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-navy-900"
+    />
+  </div>
+
+  <div>
+    <label for="phone" class="block text-sm font-medium text-navy-700">Phone Number</label>
+    <input
+      type="tel"
+      id="phone"
+      name="phone"
+      required
+      class="mt-1.5 w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm text-navy-900 focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-navy-900"
+    />
+  </div>
+
+  <div>
+    <label for="email" class="block text-sm font-medium text-navy-700">Email Address</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      required
+      class="mt-1.5 w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm text-navy-900 focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-navy-900"
+    />
+  </div>
+
+  <div>
+    <label for="city" class="block text-sm font-medium text-navy-700">City</label>
+    <input
+      type="text"
+      id="city"
+      name="city"
+      class="mt-1.5 w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm text-navy-900 focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-navy-900"
+    />
+  </div>
+
+  <div class="sm:col-span-2">
+    <label for="system" class="block text-sm font-medium text-navy-700">System Requirement</label>
+    <select
+      id="system"
+      name="system"
+      class="mt-1.5 w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm text-navy-900 focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-navy-900"
+    >
+      {systemTypes.map((type) => <option value={type}>{type}</option>)}
+    </select>
+  </div>
+
+  <div class="sm:col-span-2">
+    <label for="message" class="block text-sm font-medium text-navy-700">Message</label>
+    <textarea
+      id="message"
+      name="message"
+      rows="4"
+      class="mt-1.5 w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm text-navy-900 focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-navy-900"
+    ></textarea>
+  </div>
+
+  <div class="sm:col-span-2">
+    <button
+      type="submit"
+      class="w-full rounded-full bg-signal-500 px-6 py-3 text-sm font-semibold text-navy-950 transition-colors hover:bg-signal-400 sm:w-auto"
+    >
+      Send Inquiry
+    </button>
+  </div>
+</form>

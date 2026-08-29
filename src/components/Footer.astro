@@ -1,0 +1,72 @@
+---
+import { NAV_LINKS, SITE } from '../lib/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-navy-950 text-slate-300">
+  <div class="container-px mx-auto max-w-7xl py-16">
+    <div class="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
+      <div>
+        <a href="/" class="flex items-center gap-2 font-display text-xl font-bold text-white">
+          <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-signal-500 text-navy-950">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-5 w-5" aria-hidden="true">
+              <path d="M4 20V6a2 2 0 0 1 2-2h6l8 8v8a0 0 0 0 1 0 0H6a2 2 0 0 1-2-2Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M9 20v-5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          SmartPARX
+        </a>
+        <p class="mt-4 text-sm leading-relaxed text-slate-400">
+          Automated & mechanical parking systems - engineered, manufactured, and installed across India.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wide text-white">Navigate</h3>
+        <ul class="mt-4 space-y-2.5 text-sm">
+          {NAV_LINKS.map((link) => (
+            <li><a href={link.href} class="hover:text-signal-400 transition-colors">{link.label}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wide text-white">Products</h3>
+        <ul class="mt-4 space-y-2.5 text-sm">
+          <li><a href="/products/two-level-stacker" class="hover:text-signal-400 transition-colors">Two Level Stacker</a></li>
+          <li><a href="/products/three-level-stacker" class="hover:text-signal-400 transition-colors">Three Level Stacker</a></li>
+          <li><a href="/products/puzzle-parking" class="hover:text-signal-400 transition-colors">Puzzle Systems</a></li>
+          <li><a href="/products/pit-parking" class="hover:text-signal-400 transition-colors">Pit Systems</a></li>
+          <li><a href="/products" class="hover:text-signal-400 transition-colors">View All →</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wide text-white">Contact</h3>
+        <ul class="mt-4 space-y-3 text-sm">
+          <li>{SITE.address.line1}<br />{SITE.address.line2}<br />{SITE.address.city}</li>
+          <li>
+            <a href={`tel:${SITE.phoneLinks[0]}`} class="hover:text-signal-400 transition-colors">{SITE.phone[0]}</a>
+            <br />
+            <a href={`tel:${SITE.phoneLinks[1]}`} class="hover:text-signal-400 transition-colors">{SITE.phone[1]}</a>
+          </li>
+          <li><a href={`mailto:${SITE.email}`} class="hover:text-signal-400 transition-colors">{SITE.email}</a></li>
+          <li class="text-slate-400">{SITE.hours}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-12 flex flex-col gap-4 border-t border-white/10 pt-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+      <p>&copy; {year} SmartPARX. All rights reserved.</p>
+      <a
+        href={`https://wa.me/${SITE.whatsapp}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 text-slate-300 hover:text-signal-400 transition-colors"
+      >
+        Chat on WhatsApp →
+      </a>
+    </div>
+  </div>
+</footer>

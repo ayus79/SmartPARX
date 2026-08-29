@@ -1,0 +1,36 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  product: CollectionEntry<'products'>;
+}
+
+const { product } = Astro.props;
+const { id, data } = product;
+---
+
+<a
+  href={`/products/${id}`}
+  class="group flex flex-col rounded-2xl border border-slate-100 bg-white p-6 shadow-card transition-all hover:-translate-y-1 hover:shadow-card-hover"
+>
+  <div class="flex h-40 items-center justify-center rounded-xl bg-navy-950">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-16 w-16 text-signal-500" aria-hidden="true">
+      <path d="M4 20V6a2 2 0 0 1 2-2h6l8 8v8a0 0 0 0 1 0 0H6a2 2 0 0 1-2-2Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+      <path d="M9 20v-5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v5" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <h3 class="mt-5 font-display text-lg font-semibold text-navy-900 group-hover:text-signal-600 transition-colors">
+    {data.shortName}
+  </h3>
+  <p class="mt-2 text-sm leading-relaxed text-navy-600">{data.summary}</p>
+  <div class="mt-4 flex flex-wrap gap-2 text-xs font-medium text-navy-500">
+    <span class="rounded-full bg-slate-100 px-2.5 py-1">{data.capacity}</span>
+    <span class="rounded-full bg-slate-100 px-2.5 py-1">{data.levels} levels</span>
+  </div>
+  <span class="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-signal-600">
+    View Specifications
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true">
+      <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </span>
+</a>
