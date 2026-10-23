@@ -14,17 +14,17 @@ interface Props {
 const { variant, animate = false, class: className = '' } = Astro.props; // animate: puzzle pallet shuffle
 
 const C = {
-  ground: '#1e293b',
-  groundLine: '#64748b',
-  steel: '#334155',
-  steelEdge: '#475569',
+  ground: '#1d2721',
+  groundLine: '#5d6a62',
+  steel: '#2e3a33',
+  steelEdge: '#45524a',
   pallet: '#00a456',
-  car: '#cbd5e1',
+  car: '#b7bfba',
   carAccent: '#1fc06f',
-  glass: '#0b1220',
-  tyre: '#0b1220',
-  hub: '#94a3b8',
-  label: '#64748b',
+  glass: '#0b110d',
+  tyre: '#0b110d',
+  hub: '#8a958e',
+  label: '#5d6a62',
 };
 
 // Car side profile in a 100 x 32 local box; (x, y) is where the tyres touch the deck.
@@ -122,7 +122,7 @@ const rotarySlots = [52, 92, 132, 172].flatMap((y) => [
   {variant === 'pit' && (
     <g>
       <rect x="0" y="96" width="320" height="104" fill={C.ground} />
-      <rect x="30" y="96" width="260" height="96" fill="#0f172a" stroke={C.groundLine} stroke-dasharray="4 3" />
+      <rect x="30" y="96" width="260" height="96" fill="#121a15" stroke={C.groundLine} stroke-dasharray="4 3" />
       {Array.from({ length: 9 }, (_, i) => (
         <g stroke={C.steelEdge} stroke-width="1">
           <line x1="4" x2="26" y1={104 + i * 10} y2={96 + i * 10} />
@@ -185,7 +185,7 @@ const rotarySlots = [52, 92, 132, 172].flatMap((y) => [
     <g>
       <rect x="0" y="182" width="320" height="18" fill={C.ground} />
       <line x1="0" x2="320" y1="182" y2="182" stroke={C.groundLine} stroke-width="1.5" />
-      <rect x="104" y="6" width="112" height="176" fill="#0f172a" stroke={C.steelEdge} stroke-width="2" />
+      <rect x="104" y="6" width="112" height="176" fill="#121a15" stroke={C.steelEdge} stroke-width="2" />
       <rect x="122" y="18" width="76" height="160" rx="34" fill="none" stroke={C.pallet} stroke-width="2" stroke-dasharray="6 5" />
       <path d="M118 104l4-8 4 8M194 96l4 8 4-8" fill="none" stroke={C.pallet} stroke-width="2" />
       {rotarySlots.map((p, i) => (

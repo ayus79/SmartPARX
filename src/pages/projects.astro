@@ -1,0 +1,141 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image, getImage } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+
+const files = import.meta.glob<{ default: ImageMetadata }>('../assets/images/{projects,products,factory}/*.jpg', { eager: true });
+const img = (path: string) => files[`../assets/images/${path}`].default;
+
+type Category = 'Two-post stackers' | 'Three-level' | 'Puzzle & pit' | 'Heavy duty' | 'Custom' | 'Client sites' | 'Factory';
+
+const items: { src: ImageMetadata; category: Category; caption: string }[] = [
+  { src: img('projects/two-level-1.jpg'), category: 'Two-post stackers', caption: 'Row of two-post parking stackers' },
+  { src: img('projects/sarvopari-shayona.jpg'), category: 'Client sites', caption: 'Sarvopari, Chanakyapuri - a Shayona Group project' },
+  { src: img('projects/triple-4.jpg'), category: 'Three-level', caption: 'Three-level TPP+ stacker' },
+  { src: img('projects/two-level-3.jpg'), category: 'Two-post stackers', caption: 'Two-post stackers with yellow platforms' },
+  { src: img('products/four-pole-suspended.jpg'), category: 'Heavy duty', caption: 'Four-pole suspended system with luxury SUVs' },
+  { src: img('projects/puzzle-multilevel-2.jpg'), category: 'Puzzle & pit', caption: 'Multi-level puzzle parking structure' },
+  { src: img('projects/two-level-2.jpg'), category: 'Two-post stackers', caption: 'Two-post stacker installation' },
+  { src: img('projects/three-level-1.jpg'), category: 'Three-level', caption: 'Three-level stacker frame' },
+  { src: img('products/pit-puzzle.jpg'), category: 'Puzzle & pit', caption: 'Pit-puzzle system with platforms below grade' },
+  { src: img('projects/two-level-4.jpg'), category: 'Two-post stackers', caption: 'Two-post stacker platforms' },
+  { src: img('projects/customized-1.jpg'), category: 'Custom', caption: 'Customized parking lift' },
+  { src: img('products/puzzle-2-level.jpg'), category: 'Puzzle & pit', caption: 'Two-level motorised puzzle parking' },
+  { src: img('projects/triple-5.jpg'), category: 'Three-level', caption: 'Three cars stacked in a single bay' },
+  { src: img('projects/two-level-5.jpg'), category: 'Two-post stackers', caption: 'Two-post stacker row' },
+  { src: img('projects/puzzle-multilevel-1.jpg'), category: 'Puzzle & pit', caption: 'Multi-level puzzle module' },
+  { src: img('projects/two-level-6.jpg'), category: 'Two-post stackers', caption: 'Two-post stacker with yellow platform' },
+  { src: img('projects/triple-1.jpg'), category: 'Three-level', caption: 'TPP+ three-level stacker' },
+  { src: img('factory/unit-1.jpg'), category: 'Factory', caption: 'Manufacturing Unit 1, Vatva GIDC' },
+  { src: img('factory/unit-2.jpg'), category: 'Factory', caption: 'Manufacturing Unit 2' },
+];
+
+const categories = ['All', ...new Set(items.map((i) => i.category))];
+const full = await Promise.all(items.map((i) => getImage({ src: i.src, width: 1800, format: 'webp' })));
+---
+
+<Layout
+  title="Projects - Car Parking System Installations"
+  description="Photos of SmartPARX car parking installations: two-post stacker rows, three-level TPP+ stackers, puzzle and pit systems, four-pole suspended parking and our Ahmedabad factory."
+>
+  <PageHeader
+    kicker="Projects"
+    title="2500+ systems installed. <span class='text-ink-400'>Here are a few.</span>"
+    intro="Residential towers, commercial complexes, hospitals and showrooms - photographed on site and at our factory."
+    crumbs={[{ label: 'Projects', href: '/projects' }]}
+  >
+    <div class="mt-12 flex flex-wrap gap-2" role="group" aria-label="Filter projects">
+      {categories.map((c, i) => (
+        <button type="button" data-filter={c} aria-pressed={i === 0 ? 'true' : 'false'} class="rounded-full border border-paper-300 bg-white px-4 py-2 text-sm font-medium text-ink-700 transition-colors hover:border-ink-900 aria-pressed:border-ink-900 aria-pressed:bg-ink-900 aria-pressed:text-white">
+          {c}
+        </button>
+      ))}
+    </div>
+  </PageHeader>
+
+  <section class="container-px mx-auto max-w-[90rem] pb-24">
+    <ul class="columns-1 gap-4 sm:columns-2 lg:columns-3" id="project-grid">
+      {items.map((item, i) => (
+        <li class="mb-4 break-inside-avoid" data-category={item.category}>
+          <button type="button" class="group relative block w-full overflow-hidden rounded-[1.5rem] bg-ink-900 text-left" data-full={full[i].src} data-caption={item.caption} data-index={i}>
+            <Image src={item.src} alt={item.caption} widths={[400, 700, 1000]} sizes="(min-width: 1024px) 30vw, (min-width: 640px) 50vw, 100vw" class="w-full transition-transform duration-[1.2s] ease-out-expo group-hover:scale-105" loading={i < 3 ? 'eager' : 'lazy'} />
+            <span class="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 bg-gradient-to-t from-ink-950/85 to-transparent p-5 pt-16 opacity-100 transition-opacity sm:opacity-0 sm:group-hover:opacity-100">
+              <span>
+                <span class="block font-mono text-[10px] uppercase tracking-wider text-signal-400">{item.category}</span>
+                <span class="mt-1 block text-sm font-medium text-white">{item.caption}</span>
+              </span>
+            </span>
+          </button>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <dialog id="lightbox" class="m-auto h-dvh max-h-none w-screen max-w-none bg-transparent p-0 backdrop:bg-ink-950/95" aria-label="Project photo">
+    <div class="flex h-full flex-col p-4 sm:p-8">
+      <div class="flex items-center justify-between text-white">
+        <p class="text-sm" data-lb-caption></p>
+        <button type="button" data-lb-close class="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 hover:bg-white/20" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg>
+        </button>
+      </div>
+      <div class="relative flex min-h-0 flex-1 items-center justify-center py-4">
+        <img data-lb-img alt="" class="max-h-full max-w-full rounded-2xl object-contain" />
+        <button type="button" data-lb-prev class="absolute left-0 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20" aria-label="Previous photo">
+          <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        </button>
+        <button type="button" data-lb-next class="absolute right-0 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20" aria-label="Next photo">
+          <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <CtaBanner title="Your project could be next." />
+</Layout>
+
+<script>
+  const filters = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const tiles = document.querySelectorAll<HTMLElement>('#project-grid > li');
+  filters.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      filters.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      tiles.forEach((t) => t.classList.toggle('hidden', btn.dataset.filter !== 'All' && t.dataset.category !== btn.dataset.filter));
+    }),
+  );
+
+  const dialog = document.getElementById('lightbox') as HTMLDialogElement;
+  const lbImg = dialog.querySelector<HTMLImageElement>('[data-lb-img]')!;
+  const lbCaption = dialog.querySelector<HTMLElement>('[data-lb-caption]')!;
+  const triggers = [...document.querySelectorAll<HTMLButtonElement>('[data-full]')];
+  let current = 0;
+
+  const visible = () => triggers.filter((t) => !t.closest('li')!.classList.contains('hidden'));
+  const show = (btn: HTMLButtonElement) => {
+    current = visible().indexOf(btn);
+    lbImg.src = btn.dataset.full!;
+    lbImg.alt = btn.dataset.caption!;
+    lbCaption.textContent = btn.dataset.caption!;
+  };
+  const step = (dir: number) => {
+    const list = visible();
+    show(list[(current + dir + list.length) % list.length]);
+  };
+
+  triggers.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      show(btn);
+      dialog.showModal();
+    }),
+  );
+  dialog.querySelector('[data-lb-close]')!.addEventListener('click', () => dialog.close());
+  dialog.querySelector('[data-lb-prev]')!.addEventListener('click', () => step(-1));
+  dialog.querySelector('[data-lb-next]')!.addEventListener('click', () => step(1));
+  dialog.addEventListener('click', (e) => e.target === dialog && dialog.close());
+  dialog.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') step(1);
+    if (e.key === 'ArrowLeft') step(-1);
+  });
+</script>

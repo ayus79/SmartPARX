@@ -1,0 +1,55 @@
+---
+import { SAFETY_FEATURES } from '../../lib/site';
+---
+
+<section class="section-py" aria-labelledby="assurance-title">
+  <div class="container-px mx-auto max-w-[90rem]">
+    <div class="grid gap-4 lg:grid-cols-12">
+      <div class="reveal relative flex flex-col justify-between overflow-hidden rounded-[1.75rem] bg-signal-500 p-8 text-ink-950 sm:p-10 lg:col-span-5">
+        <div>
+          <p class="font-mono text-[11px] uppercase tracking-wider text-ink-950/70">05 - Warranty</p>
+          <h2 id="assurance-title" class="display mt-6 text-[clamp(5rem,12vw,10rem)] tabular-nums">2+5</h2>
+          <p class="mt-2 font-display text-2xl font-semibold tracking-tight">years of cover.</p>
+        </div>
+        <div class="mt-10 space-y-4 text-ink-950/85">
+          <p>
+            <strong class="text-ink-950">2 years zero-pay warranty</strong> as standard, and an <strong class="text-ink-950">additional 5 years</strong> with an AMC contract - the only company to offer it.
+          </p>
+          <p class="text-xs leading-relaxed text-ink-950/70">
+            Zero-pay warranty excludes damage from water leakage, debris, mud or water logging, lack of cleaning, theft, fire and natural events.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid gap-4 lg:col-span-7">
+        <div class="reveal rounded-[1.75rem] bg-ink-950 p-8 text-white sm:p-10">
+          <p class="font-mono text-[11px] uppercase tracking-wider text-ink-400">Safety, standard on every model</p>
+          <ol class="mt-8 grid gap-8 sm:grid-cols-3">
+            {SAFETY_FEATURES.map((f, i) => (
+              <li>
+                <span class="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 font-mono text-xs text-signal-400">0{i + 1}</span>
+                <h3 class="mt-5 font-display text-lg font-semibold tracking-tight">{f.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-ink-300">{f.description}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <div class="reveal flex flex-col gap-6 rounded-[1.75rem] border border-paper-300 bg-white p-8 sm:flex-row sm:items-center sm:justify-between sm:p-10">
+          <div class="flex items-center gap-5">
+            <span class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-signal-50 text-signal-600">
+              <svg viewBox="0 0 24 24" fill="none" class="h-7 w-7" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" /></svg>
+            </span>
+            <div>
+              <h3 class="font-display text-xl font-semibold tracking-tight text-ink-900">EV-ready, every system</h3>
+              <p class="mt-1 text-sm text-ink-500">All SmartPARX parking systems are compatible with EV charging provisions.</p>
+            </div>
+          </div>
+          <a href="/planning-guide#safety" class="link-arrow shrink-0 text-ink-900 hover:text-signal-600">
+            Safety guide
+            <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

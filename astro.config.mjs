@@ -3,23 +3,22 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
+const SITE = 'https://www.smartparx.com';
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.smartparx.com',
+  site: SITE,
   trailingSlash: 'never',
+  redirects: {
+    '/gallery': '/projects',
+  },
   integrations: [
     sitemap({
+      filter: (page) => !page.includes('/gallery'),
       serialize(item) {
-        if (item.url === 'https://www.smartparx.com/') {
-          return { ...item, priority: 1.0 };
-        }
-        if (item.url.includes('/products/') && item.url !== 'https://www.smartparx.com/products') {
-          return { ...item, priority: 0.9 };
-        }
-        if (item.url === 'https://www.smartparx.com/products') {
-          return { ...item, priority: 0.9 };
-        }
-        return { ...item, priority: 0.7 };
+        const path = new URL(item.url).pathname.replace(/\/$/, '') || '/';
+        const priority = path === '/' ? 1.0 : path.startsWith('/products') || path === '/planning-guide' ? 0.9 : 0.7;
+        return { ...item, priority };
       },
     }),
   ],

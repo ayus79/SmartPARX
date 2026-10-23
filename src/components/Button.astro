@@ -1,30 +1,51 @@
 ---
 interface Props {
   href: string;
-  variant?: 'primary' | 'secondary' | 'ghost';
+  variant?: 'primary' | 'dark' | 'outline' | 'ghost-light';
   size?: 'md' | 'lg';
+  arrow?: boolean;
   class?: string;
+  [key: string]: unknown;
 }
 
-const { href, variant = 'primary', size = 'md', class: className = '' } = Astro.props;
-
-const base =
-  'inline-flex items-center justify-center gap-2 rounded-md font-semibold uppercase tracking-wide transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2';
+const { href, variant = 'primary', size = 'md', arrow = true, class: className = '', ...rest } = Astro.props;
 
 const variants = {
-  primary: 'bg-signal-500 text-navy-950 hover:bg-signal-400 focus-visible:outline-signal-500',
-  secondary:
-    'bg-navy-900 text-white hover:bg-navy-800 focus-visible:outline-navy-900',
-  ghost:
-    'bg-white/10 text-white border border-white/30 hover:bg-white/20 focus-visible:outline-white',
+  // Green with ink text: 5.7:1 contrast. White on #00a456 would fail AA.
+  primary: 'bg-signal-500 text-ink-950 hover:bg-signal-400',
+  dark: 'bg-ink-900 text-white hover:bg-ink-800',
+  outline: 'border border-ink-900/20 text-ink-900 hover:border-ink-900 hover:bg-ink-900 hover:text-white',
+  'ghost-light': 'border border-white/25 text-white hover:border-white hover:bg-white hover:text-ink-950',
 };
 
 const sizes = {
-  md: 'px-5 py-2.5 text-xs',
-  lg: 'px-7 py-4 text-sm',
+  md: 'h-11 pl-5 text-sm',
+  lg: 'h-14 pl-7 text-[0.95rem]',
 };
 ---
 
-<a href={href} class={`${base} ${variants[variant]} ${sizes[size]} ${className}`}>
+<a
+  href={href}
+  class:list={[
+    'group/btn inline-flex shrink-0 items-center gap-3 rounded-full font-semibold tracking-tight transition-colors duration-300',
+    variants[variant],
+    sizes[size],
+    arrow ? (size === 'lg' ? 'pr-2' : 'pr-1.5') : size === 'lg' ? 'pr-7' : 'pr-5',
+    className,
+  ]}
+  {...rest}
+>
   <slot />
+  {arrow && (
+    <span
+      class:list={[
+        'flex items-center justify-center rounded-full transition-transform duration-500 ease-out-expo group-hover/btn:-rotate-45',
+        size === 'lg' ? 'h-10 w-10' : 'h-8 w-8',
+        variant === 'primary' ? 'bg-ink-950 text-signal-400' : variant === 'dark' ? 'bg-signal-500 text-ink-950' : 'bg-current/10',
+      ]}
+      aria-hidden="true"
+    >
+      <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    </span>
+  )}
 </a>

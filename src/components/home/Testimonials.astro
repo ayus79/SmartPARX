@@ -1,0 +1,46 @@
+---
+import { TESTIMONIALS } from '../../lib/site';
+
+const [featured, ...rest] = TESTIMONIALS;
+const initials = (name: string) =>
+  name.replace('Shri ', '').split(' ').map((p) => p[0]).join('').slice(0, 2);
+---
+
+<section id="testimonials" class="section-py scroll-mt-20 bg-white" aria-labelledby="testimonials-title">
+  <div class="container-px mx-auto max-w-[90rem]">
+    <p class="kicker">06 - In their words</p>
+    <h2 id="testimonials-title" class="sr-only">Client testimonials</h2>
+
+    <figure class="reveal mt-10 grid gap-10 lg:grid-cols-12">
+      <blockquote class="lg:col-span-9">
+        <p class="font-display text-[clamp(1.75rem,3.6vw,3.25rem)] leading-[1.12] font-medium tracking-[-0.03em] text-balance text-ink-900">
+          <span class="text-signal-500">“</span>{featured.quote}<span class="text-signal-500">”</span>
+        </p>
+      </blockquote>
+      <figcaption class="flex items-center gap-4 self-end lg:col-span-3 lg:flex-col lg:items-start">
+        <span class="flex h-14 w-14 items-center justify-center rounded-full bg-ink-900 font-display text-lg font-semibold text-white">{initials(featured.name)}</span>
+        <span>
+          <span class="block font-semibold text-ink-900">{featured.name}</span>
+          <span class="block text-sm text-ink-500">{featured.role}</span>
+        </span>
+      </figcaption>
+    </figure>
+
+    <div class="mt-16 -mx-5 overflow-x-auto px-5 pb-4 [scrollbar-width:thin] sm:-mx-8 sm:px-8 lg:mx-0 lg:px-0">
+      <ul class="flex snap-x snap-mandatory gap-4 lg:grid lg:grid-cols-5">
+        {rest.map((t) => (
+          <li class="w-[82%] shrink-0 snap-start sm:w-[45%] lg:w-auto">
+            <figure class="flex h-full flex-col justify-between rounded-[1.5rem] border border-paper-300 bg-paper p-6">
+              <blockquote class="text-[0.95rem] leading-relaxed text-ink-700">“{t.quote}”</blockquote>
+              <figcaption class="mt-6 border-t border-paper-300 pt-4">
+                <span class="block text-sm font-semibold text-ink-900">{t.name}</span>
+                <span class="mt-0.5 block text-xs text-ink-500">{t.role}</span>
+                <span class="mt-3 inline-block rounded-full bg-white px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-ink-500">Client since {t.since}</span>
+              </figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

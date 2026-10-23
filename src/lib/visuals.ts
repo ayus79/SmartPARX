@@ -1,31 +1,8 @@
-import type { CollectionEntry } from 'astro:content';
-
 export type Visual = 'stacker2' | 'stacker3' | 'pit' | 'puzzle' | 'circulation' | 'two-wheeler' | 'custom';
 
-/** Picks the illustration that matches a product's system family. */
-export function visualFor(data: CollectionEntry<'products'>['data']): Visual {
-  switch (data.category) {
-    case 'stacker':
-      return data.levels.trim().startsWith('3') ? 'stacker3' : 'stacker2';
-    case 'pit':
-    case 'puzzle':
-    case 'circulation':
-    case 'two-wheeler':
-    case 'custom':
-      return data.category;
-  }
-}
-
-/** Short system code shown on cards, e.g. "STACKER · 2 LVL". */
-export function systemLabel(data: CollectionEntry<'products'>['data']): string {
-  const family: Record<CollectionEntry<'products'>['data']['category'], string> = {
-    stacker: 'Stacker',
-    pit: 'Pit',
-    puzzle: 'Puzzle',
-    circulation: 'Rotary',
-    'two-wheeler': '2-Wheeler',
-    custom: 'Custom',
-  };
-  const levels = /^\d/.test(data.levels) ? ` · ${data.levels.split(' ')[0]} LVL` : '';
-  return `${family[data.category]}${levels}`;
-}
+export const FAMILIES = {
+  'two-post': { label: 'Two-post stackers', blurb: 'Double any bay without excavation. Four models from 2000 to 2700 kg.' },
+  'heavy-duty': { label: 'Heavy-duty systems', blurb: 'Structural-steel frames for wide platforms, shared pillars and long spans.' },
+  'multi-level': { label: 'Multi-level & puzzle', blurb: 'Three levels, sliding puzzles and pit systems for dense sites.' },
+  specialised: { label: 'Specialised & custom', blurb: 'Single-post, two-wheeler and fully customised systems for unusual sites.' },
+} as const;

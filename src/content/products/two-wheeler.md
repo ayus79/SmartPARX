@@ -1,26 +1,21 @@
 ---
-title: Two Wheeler Parking Systems
-shortName: Two Wheeler Systems
-category: two-wheeler
-summary: Multi-tier stacking built specifically for two-wheelers, letting facilities multiply bike parking capacity in a fraction of a car bay's footprint.
-capacity: 2-3 bikes per bay
-liftSpeed: Manual / semi-automated glide
-levels: "2-3"
-powerSupply: "Manual or 230V assisted"
-order: 6
+title: Two Wheeler Parking System
+shortName: Two Wheeler
+family: specialised
+order: 10
+summary: Two-level bike parking on slim welded columns with a shared hydraulic line - multiplies two-wheeler capacity along a wall.
+capacity: 300 kg
+capacityKg: 300
+platformSizes: 800 – 1400 mm
+structure: Sheet metal welded column with strong slider
+mechanism: Telescopic hydraulic cylinder on shared lines
+weight: 200+ kg
+paint: All-weather powder coating with zinc epoxy primer; hot-dip galvanizing on request
 features:
-  - Lightweight rail-and-glide platform sized for two-wheelers
-  - Manual or gas-assisted lift for low-maintenance operation
-  - Space-efficient design fits under stair voids and low-clearance areas
-  - Modular bays that can be added incrementally
-safetyFeatures:
-  - Locking pins at each stored position
-  - Non-slip platform surface with wheel chocks
-  - Load-rated rails tested to manufacturer specification
-applications:
-  - Residential societies and apartment complexes
-  - Corporate campuses and IT parks
-  - Retail and transit hub two-wheeler parking
+  - Doubles two-wheeler parking in the same wall length
+  - Shared hydraulic lines across a row of units
+  - Narrow platforms from 800 to 1400 mm
+illustration: two-wheeler
 ---
 
-Two-wheeler parking is often an afterthought in site planning - SmartPARX's dedicated system reclaims that space efficiently, multiplying two-wheeler capacity without competing with car parking allocation.
+Two-wheeler parking is often the first thing to run out in Indian residential and commercial projects. SmartPARX's bike stacker lifts one two-wheeler above another on a compact column, running a whole row off shared hydraulic lines.

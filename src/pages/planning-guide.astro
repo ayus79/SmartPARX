@@ -1,0 +1,162 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import FitPlanner from '../components/FitPlanner.astro';
+import Faq from '../components/home/Faq.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import { HEIGHT_GUIDE, SAFETY_FEATURES, WIDTH_GUIDE } from '../lib/site';
+
+const fmt = (n: number) => n.toLocaleString('en-IN');
+
+const rules = [
+  { title: 'Drive slowly', detail: 'Keep to 5–10 km/h while driving onto a platform.' },
+  { title: 'Touch the stop bar', detail: 'The car must rest against the platform stop bar every time.' },
+  { title: 'No washing on the system', detail: 'Never wash cars on or below the platform.' },
+  { title: 'Keep approach slopes ≤ 4%', detail: 'Steeper descending or ascending approaches cause positioning problems.' },
+  { title: 'Keep anchors dry', detail: 'Don’t let column anchors stand in water - it affects structural integrity.' },
+];
+---
+
+<Layout
+  title="Car Parking Stacker Planning Guide - Height, Width & Driveway"
+  description="How much height and width does a car parking stacker need? Sedan + Sedan needs 3400 mm, SUV + SUV 4300 mm. Column spacing tables, driveway sizes and safety rules from SmartPARX engineers."
+>
+  <PageHeader
+    kicker="Planning guide"
+    title="Plan a stacker basement <span class='text-ink-400'>the way our engineers do.</span>"
+    intro="Clear heights, column spacing, driveway widths and safety rules for two-level parking stackers - the same guidelines we use on site."
+    crumbs={[{ label: 'Planning Guide', href: '/planning-guide' }]}
+  />
+
+  <FitPlanner heading={false} />
+
+  <section class="container-px mx-auto max-w-[90rem] section-py" aria-labelledby="height-title">
+    <div class="grid gap-14 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <p class="kicker">01 - Height</p>
+        <h2 id="height-title" class="display mt-6 text-[clamp(2rem,3.6vw,3rem)] text-ink-900">Required clear height</h2>
+        <p class="mt-5 leading-relaxed text-ink-600">
+          Measured from finished floor to the underside of the lowest beam, slab or service. Upper-car height assumes a 1550 mm sedan. Add space for fire-suppression pipes, plumbing and service lines.
+        </p>
+      </div>
+      <ul class="grid gap-4 sm:grid-cols-3 lg:col-span-8">
+        {HEIGHT_GUIDE.map((h) => (
+          <li class="reveal flex flex-col rounded-[1.5rem] border border-paper-300 bg-white p-6">
+            <span class="font-mono text-[11px] uppercase tracking-wider text-ink-500">{h.combo}</span>
+            <span class="display mt-6 text-5xl tabular-nums text-ink-900">{fmt(h.total)}<span class="ml-1 text-lg text-ink-400">mm</span></span>
+            <span class="mt-2 text-sm text-ink-500">Lower level clear: {fmt(h.lower)} mm</span>
+            <div class="mt-6 h-1.5 overflow-hidden rounded-full bg-paper-200">
+              <div class="h-full rounded-full bg-signal-500" style={`width:${Math.round((h.total / 4300) * 100)}%`}></div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="container-px mx-auto max-w-[90rem] border-t border-paper-300 section-py" aria-labelledby="width-title">
+    <div class="grid gap-14 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <p class="kicker">02 - Width</p>
+        <h2 id="width-title" class="display mt-6 text-[clamp(2rem,3.6vw,3rem)] text-ink-900">Width between columns</h2>
+        <p class="mt-5 leading-relaxed text-ink-600">
+          Adjacent bays share a column, so two- and three-bay runs need less than two or three single bays. We recommend a usable platform width of at least <strong class="text-ink-900">2200 mm</strong> for Indian cars. Clearance varies ±100 mm between models.
+        </p>
+      </div>
+      <div class="overflow-x-auto lg:col-span-8">
+        <table class="w-full min-w-[34rem] border-separate border-spacing-0 overflow-hidden rounded-[1.5rem] border border-paper-300 bg-white text-left tabular-nums">
+          <caption class="sr-only">Column clearance by platform width and number of bays, in millimetres</caption>
+          <thead>
+            <tr class="font-mono text-[11px] uppercase tracking-wider text-ink-500">
+              <th scope="col" class="border-b border-paper-300 p-5 font-medium">Usable platform</th>
+              <th scope="col" class="border-b border-paper-300 p-5 font-medium">1 bay</th>
+              <th scope="col" class="border-b border-paper-300 p-5 font-medium">2 bays</th>
+              <th scope="col" class="border-b border-paper-300 p-5 font-medium">3 bays</th>
+            </tr>
+          </thead>
+          <tbody>
+            {WIDTH_GUIDE.map((w) => (
+              <tr class:list={[w.platform === 2200 && 'bg-signal-50']}>
+                <th scope="row" class="border-b border-paper-300 p-5 font-semibold text-ink-900">
+                  {fmt(w.platform)} mm
+                  {w.platform === 2200 && <span class="ml-2 rounded-full bg-signal-500 px-2 py-0.5 font-mono text-[10px] text-ink-950">Recommended</span>}
+                </th>
+                {w.bays.map((b) => <td class="border-b border-paper-300 p-5 text-ink-700">{fmt(b)} mm</td>)}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-px mx-auto max-w-[90rem] border-t border-paper-300 section-py" aria-labelledby="drive-title">
+    <div class="grid gap-14 lg:grid-cols-12 lg:items-center">
+      <div class="lg:col-span-4">
+        <p class="kicker">03 - Driveway</p>
+        <h2 id="drive-title" class="display mt-6 text-[clamp(2rem,3.6vw,3rem)] text-ink-900">Turning & driveway</h2>
+        <ul class="mt-6 space-y-4 text-ink-600">
+          <li class="flex gap-4"><span class="font-mono text-sm text-signal-600">5,500</span><span>mm minimum driveway for regular cars.</span></li>
+          <li class="flex gap-4"><span class="font-mono text-sm text-signal-600">6,000</span><span>mm strongly recommended for cars longer than 4.7 m.</span></li>
+          <li class="flex gap-4"><span class="font-mono text-sm text-signal-600">5,150</span><span>mm bay length (4000 + 700 front) for cars up to 5 m.</span></li>
+        </ul>
+      </div>
+      <figure class="reveal rounded-[1.75rem] bg-ink-950 p-6 sm:p-10 lg:col-span-8">
+        <svg viewBox="0 0 640 300" class="w-full" role="img" aria-label="Plan view: row of stacker bays with a 5500 to 7000 mm driveway in front">
+          <rect x="20" y="20" width="600" height="260" fill="none" stroke="#45524a" stroke-width="2" />
+          {[0, 1, 2, 3, 4].map((i) => (
+            <g>
+              <rect x={40 + i * 112} y="30" width="100" height="105" fill="#1d2721" stroke="#5d6a62" stroke-dasharray="5 4" />
+              <rect x={40 + i * 112} y="30" width="6" height="105" fill="#2e3a33" />
+              <rect x={134 + i * 112} y="30" width="6" height="105" fill="#2e3a33" />
+              <rect x={60 + i * 112} y="48" width="60" height="70" rx="12" fill={i === 2 ? '#00a456' : '#8a958e'} />
+            </g>
+          ))}
+          <path d="M150 260 C 250 255, 300 200, 330 150" fill="none" stroke="#f2c200" stroke-width="2" stroke-dasharray="6 6" />
+          <path d="M324 160 l6 -10 l4 11" fill="none" stroke="#f2c200" stroke-width="2" />
+          <g stroke="#1fc06f" stroke-width="1.5">
+            <line x1="590" x2="590" y1="140" y2="275" />
+            <line x1="583" x2="597" y1="140" y2="140" />
+            <line x1="583" x2="597" y1="275" y2="275" />
+          </g>
+          <text x="578" y="212" fill="#1fc06f" font-family="ui-monospace, monospace" font-size="13" text-anchor="end">5,500 – 7,000 mm</text>
+          <text x="40" y="160" fill="#8a958e" font-family="ui-monospace, monospace" font-size="12">STACKER BAYS</text>
+          <text x="40" y="255" fill="#8a958e" font-family="ui-monospace, monospace" font-size="12">DRIVEWAY</text>
+        </svg>
+        <figcaption class="mt-4 text-sm text-ink-400">Platforms narrower than 2200 mm make it harder to park and to get out of the car.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="safety" class="container-px mx-auto max-w-[90rem] scroll-mt-24 border-t border-paper-300 section-py" aria-labelledby="safety-title">
+    <div class="grid gap-14 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <p class="kicker">04 - Safety</p>
+        <h2 id="safety-title" class="display mt-6 text-[clamp(2rem,3.6vw,3rem)] text-ink-900">Built-in safety & house rules</h2>
+        <p class="mt-5 leading-relaxed text-ink-600">Three protections are built into every system. The rest is good practice - share these with residents and drivers.</p>
+      </div>
+      <div class="grid gap-4 lg:col-span-8">
+        <ol class="grid gap-4 sm:grid-cols-3">
+          {SAFETY_FEATURES.map((f, i) => (
+            <li class="reveal rounded-[1.5rem] bg-ink-950 p-6 text-white">
+              <span class="font-mono text-xs text-signal-400">0{i + 1}</span>
+              <h3 class="mt-4 font-display text-lg font-semibold tracking-tight">{f.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-ink-300">{f.description}</p>
+            </li>
+          ))}
+        </ol>
+        <ul class="divide-y divide-paper-300 rounded-[1.5rem] border border-paper-300 bg-white">
+          {rules.map((r) => (
+            <li class="flex flex-col gap-1 p-5 sm:flex-row sm:items-baseline sm:gap-6">
+              <span class="shrink-0 font-display font-semibold text-ink-900 sm:w-56">{r.title}</span>
+              <span class="text-sm text-ink-600">{r.detail}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <Faq title="Planning questions, answered" />
+  <CtaBanner />
+</Layout>

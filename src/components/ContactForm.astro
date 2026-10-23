@@ -1,94 +1,59 @@
 ---
-const systemTypes = [
-  'Two Level Stacker',
-  'Three Level Stacker',
-  'Pit Parking System',
-  'Puzzle Parking System',
-  'Vertical Circulation System',
-  'Two Wheeler System',
-  'Custom / Not Sure Yet',
-];
+import { getCollection } from 'astro:content';
+
+const products = (await getCollection('products')).sort((a, b) => a.data.order - b.data.order);
+const systemTypes = [...products.map((p) => p.data.shortName), 'Not sure yet - need advice'];
+const field =
+  'mt-2 w-full rounded-xl border border-paper-300 bg-paper px-4 py-3 text-[0.95rem] text-ink-900 transition-colors placeholder:text-ink-400 focus:border-ink-900 focus:bg-white focus:outline-none';
+const label = 'font-mono text-[11px] uppercase tracking-wider text-ink-500';
 ---
 
-<form
-  class="grid grid-cols-1 gap-5 sm:grid-cols-2"
-  action="https://api.web3forms.com/submit"
-  method="POST"
->
+<form class="grid grid-cols-1 gap-6 sm:grid-cols-2" action="https://api.web3forms.com/submit" method="POST" id="contact-form">
+  <!-- TODO: replace with the client's Web3Forms access key before launch. -->
   <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
-  <input type="hidden" name="subject" value="New inquiry from SmartPARX website" />
+  <input type="hidden" name="subject" value="New inquiry from smartparx.com" />
   <input type="checkbox" name="botcheck" class="hidden" style="display: none;" />
 
   <div>
-    <label for="name" class="block text-sm font-medium text-navy-700">Full Name</label>
-    <input
-      type="text"
-      id="name"
-      name="name"
-      required
-      class="mt-1.5 w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm text-navy-900 focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-navy-900"
-    />
+    <label for="name" class={label}>Full name</label>
+    <input type="text" id="name" name="name" autocomplete="name" required class={field} />
   </div>
-
   <div>
-    <label for="phone" class="block text-sm font-medium text-navy-700">Phone Number</label>
-    <input
-      type="tel"
-      id="phone"
-      name="phone"
-      required
-      class="mt-1.5 w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm text-navy-900 focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-navy-900"
-    />
+    <label for="phone" class={label}>Phone</label>
+    <input type="tel" id="phone" name="phone" autocomplete="tel" required class={field} />
   </div>
-
   <div>
-    <label for="email" class="block text-sm font-medium text-navy-700">Email Address</label>
-    <input
-      type="email"
-      id="email"
-      name="email"
-      required
-      class="mt-1.5 w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm text-navy-900 focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-navy-900"
-    />
+    <label for="email" class={label}>Email</label>
+    <input type="email" id="email" name="email" autocomplete="email" class={field} />
   </div>
-
   <div>
-    <label for="city" class="block text-sm font-medium text-navy-700">City</label>
-    <input
-      type="text"
-      id="city"
-      name="city"
-      class="mt-1.5 w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm text-navy-900 focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-navy-900"
-    />
+    <label for="city" class={label}>Project city</label>
+    <input type="text" id="city" name="city" autocomplete="address-level2" class={field} />
   </div>
-
-  <div class="sm:col-span-2">
-    <label for="system" class="block text-sm font-medium text-navy-700">System Requirement</label>
-    <select
-      id="system"
-      name="system"
-      class="mt-1.5 w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm text-navy-900 focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-navy-900"
-    >
+  <div>
+    <label for="system" class={label}>System</label>
+    <select id="system" name="system" class={field}>
       {systemTypes.map((type) => <option value={type}>{type}</option>)}
     </select>
   </div>
-
-  <div class="sm:col-span-2">
-    <label for="message" class="block text-sm font-medium text-navy-700">Message</label>
-    <textarea
-      id="message"
-      name="message"
-      rows="4"
-      class="mt-1.5 w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm text-navy-900 focus:border-navy-900 focus:outline-none focus:ring-1 focus:ring-navy-900"
-    ></textarea>
+  <div>
+    <label for="spaces" class={label}>Car spaces needed</label>
+    <input type="number" id="spaces" name="spaces" min="1" inputmode="numeric" placeholder="e.g. 40" class={field} />
   </div>
-
   <div class="sm:col-span-2">
-    <button
-      type="submit"
-      class="w-full rounded-md bg-signal-500 px-6 py-3 text-sm font-semibold text-navy-950 transition-colors hover:bg-signal-400 sm:w-auto"
-    >
-      Send Inquiry
+    <label for="message" class={label}>Site details</label>
+    <textarea id="message" name="message" rows="4" placeholder="Clear height, basement or stilt, number of floors…" class={field}></textarea>
+  </div>
+  <div class="flex flex-col gap-4 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
+    <p class="text-xs text-ink-500">We reply within one working day. Your details are only used to respond to this enquiry.</p>
+    <button type="submit" class="inline-flex h-14 shrink-0 items-center justify-center rounded-full bg-ink-900 px-8 font-semibold text-white transition-colors hover:bg-ink-800">
+      Send enquiry
     </button>
   </div>
 </form>
+
+<script>
+  const system = new URLSearchParams(location.search).get('system');
+  const select = document.querySelector<HTMLSelectElement>('#contact-form #system');
+  if (system && select && [...select.options].some((o) => o.value === system)) select.value = system;
+</script>

@@ -1,27 +1,18 @@
 ---
-title: Puzzle Parking Systems
-shortName: Puzzle Systems
-category: puzzle
-summary: A PLC-controlled matrix of pallets that shift vertically and horizontally like a sliding puzzle, delivering the highest density of any SmartPARX system.
-capacity: 6-20+ vehicles per module
-liftSpeed: 6-10 m/min
-levels: "2-6"
-powerSupply: "415V, 3-phase, PLC control panel"
-order: 4
+title: Motorised Puzzle Parking System
+shortName: Puzzle Parking
+family: multi-level
+order: 7
+summary: Motorised pallets that slide sideways and lift vertically - any car can be retrieved without moving the others. Configured per site, from 2-level 2×6 grids to multi-level towers.
+capacity: Configured per site
+platformSizes: Configured per site
 features:
-  - PLC-controlled pallet routing with touchscreen operator panel
-  - Modular matrix design scales horizontally and vertically
-  - Simultaneous multi-pallet movement for faster retrieval cycles
-  - RFID or card-based access for tenant allocation
-safetyFeatures:
-  - Zone-based interlocks prevent pallet collision
-  - Encoder-based position feedback on every axis
-  - Automatic fault detection with fail-safe hold
-  - CCTV-integrated monitoring option
-applications:
-  - Large commercial and mixed-use towers
-  - Shopping malls with high vehicle turnover
-  - Smart buildings requiring app-based retrieval
+  - Independent retrieval - no shuffling cars by hand
+  - Scales from a 2-level 2×6 grid to multi-level structures
+  - Motor-gearbox drives with rope or chain lifting
+image: ../../assets/images/products/puzzle-2-level.jpg
+imageFit: cover
+gallery: [../../assets/images/products/puzzle-2-level-alt.jpg, ../../assets/images/projects/puzzle-multilevel-1.jpg, ../../assets/images/projects/puzzle-multilevel-2.jpg]
 ---
 
-The Puzzle Parking System is SmartPARX's flagship high-density solution, built around an intelligent PLC matrix that routes pallets automatically. It's the go-to system for sites where every vehicle slot matters.
+Puzzle parking is the answer for high-turnover sites where every car must be available on demand. One space in each row is left empty; the pallets shift into it so the requested car can come down to the entry level. SmartPARX designs each puzzle system around the site's grid - specifications are prepared per project.

@@ -4,17 +4,13 @@ import Button from '../components/Button.astro';
 ---
 
 <Layout title="Page Not Found" description="The page you're looking for doesn't exist." noindex>
-  <section class="section-py bg-navy-950 text-white">
-    <div class="container-px mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
-      <p class="font-display text-6xl font-bold text-signal-500">404</p>
-      <h1 class="text-balance font-display text-3xl font-bold sm:text-4xl">Page not found</h1>
-      <p class="max-w-lg text-slate-300">
-        The page you're looking for may have moved or no longer exists. Try one of these instead:
-      </p>
-      <div class="flex flex-wrap justify-center gap-4">
-        <Button href="/" size="lg">Back to Home</Button>
-        <Button href="/products" variant="ghost" size="lg">View Products</Button>
-      </div>
+  <section class="container-px mx-auto flex min-h-[70vh] max-w-[90rem] flex-col justify-center py-24">
+    <p class="kicker">Error 404</p>
+    <h1 class="display mt-6 text-[clamp(3rem,10vw,9rem)] text-ink-900">This bay is <span class="text-signal-600">empty.</span></h1>
+    <p class="mt-6 max-w-lg text-lg text-ink-600">The page you’re looking for has moved or doesn’t exist.</p>
+    <div class="mt-10 flex flex-wrap gap-3">
+      <Button href="/" size="lg">Back to home</Button>
+      <Button href="/products" variant="outline" size="lg" arrow={false}>Browse products</Button>
     </div>
   </section>
 </Layout>

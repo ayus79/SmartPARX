@@ -12,64 +12,64 @@ interface Props {
 const {
   title,
   description = SITE.description,
-  image = SITE.logo,
+  image = SITE.ogImage,
   noindex = false,
   type = 'website',
 } = Astro.props;
 
-const pageTitle = title === SITE.name ? `${SITE.name} - ${SITE.tagline}` : `${title} | ${SITE.name}`;
+const pageTitle =
+  title === SITE.name ? `${SITE.name} - Car Parking System Manufacturer in Ahmedabad` : `${title} | ${SITE.name}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImageURL = new URL(image, Astro.site);
+const sameAs = Object.values(SITE.social).filter(Boolean);
 
-const localBusinessSchema = {
+const organizationSchema = {
   '@context': 'https://schema.org',
-  '@type': 'HomeAndConstructionBusiness',
+  '@type': ['Organization', 'LocalBusiness'],
   '@id': `${SITE.url}/#organization`,
   name: SITE.fullName,
   alternateName: SITE.name,
+  slogan: SITE.tagline,
   description: SITE.description,
   url: SITE.url,
-  logo: new URL(SITE.logo, SITE.url).toString(),
-  image: new URL(SITE.logo, SITE.url).toString(),
+  logo: new URL('/favicon.svg', SITE.url).toString(),
+  image: new URL(SITE.ogImage, SITE.url).toString(),
   telephone: SITE.phone[0],
   email: SITE.email,
   foundingDate: SITE.founded,
-  priceRange: '$$',
+  founder: { '@type': 'Person', name: SITE.founder },
   address: {
     '@type': 'PostalAddress',
-    streetAddress: `${SITE.address.line1}, ${SITE.address.line2}`,
+    streetAddress: `${SITE.office.line1}, ${SITE.office.line2}`,
     addressLocality: 'Ahmedabad',
     addressRegion: 'Gujarat',
-    postalCode: '382445',
+    postalCode: '380060',
     addressCountry: 'IN',
   },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: SITE.geo.latitude,
-    longitude: SITE.geo.longitude,
+  location: {
+    '@type': 'Place',
+    name: 'SmartPARX Factory',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: `${SITE.factory.line1}, ${SITE.factory.line2}`,
+      addressLocality: 'Ahmedabad',
+      addressRegion: 'Gujarat',
+      postalCode: '382445',
+      addressCountry: 'IN',
+    },
   },
-  openingHoursSpecification: {
-    '@type': 'OpeningHoursSpecification',
-    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-    opens: '10:00',
-    closes: '18:00',
-  },
-  sameAs: Object.values(SITE.social),
-  areaServed: {
-    '@type': 'Country',
-    name: 'India',
-  },
+  hasCredential: { '@type': 'EducationalOccupationalCredential', name: 'ISO 9001:2015' },
+  areaServed: { '@type': 'Country', name: 'India' },
+  ...(sameAs.length > 0 && { sameAs }),
 };
 ---
 
 <title>{pageTitle}</title>
 <meta name="description" content={description} />
-<meta name="keywords" content={SITE.keywords} />
-<meta name="author" content={SITE.fullName} />
 <link rel="canonical" href={canonicalURL} />
-{noindex && <meta name="robots" content="noindex, nofollow" />}
+<meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'} />
 
-<meta property="og:type" content={type} />
+<meta property="og:type" content={type === 'product' ? 'website' : type} />
 <meta property="og:title" content={pageTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonicalURL} />
@@ -84,4 +84,4 @@ const localBusinessSchema = {
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={ogImageURL} />
 
-<script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />

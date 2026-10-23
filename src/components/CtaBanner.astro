@@ -8,23 +8,23 @@ interface Props {
 }
 
 const {
-  title = 'Ready to add parking capacity without adding a footprint?',
-  description = 'Talk to our engineering team for a free site assessment and quotation - no obligation.',
+  title = 'Tell us about your basement. We’ll tell you how many cars fit.',
+  description = 'Free site survey and quotation from our engineering team - usually within one working day.',
 } = Astro.props;
 ---
 
-<section class="asphalt text-white">
-  <div class="hazard h-2"></div>
-  <div class="container-px mx-auto grid max-w-7xl grid-cols-1 items-center gap-10 py-16 sm:py-20 lg:grid-cols-[auto_1fr_auto]">
-    <span class="hidden h-24 w-24 items-center justify-center rounded-lg bg-signal-500 font-display text-6xl font-extrabold text-white outline-4 outline-white -outline-offset-8 lg:flex" aria-hidden="true">P</span>
-    <div>
-      <h2 class="text-balance font-display text-3xl font-bold sm:text-4xl">{title}</h2>
-      <p class="mt-3 max-w-xl text-base text-slate-300">{description}</p>
-    </div>
-    <div class="flex flex-wrap gap-4">
-      <Button href="/contact" size="lg">Request a Quote</Button>
-      <Button href={`tel:${SITE.phoneLinks[0]}`} variant="ghost" size="lg">Call {SITE.phone[0]}</Button>
+<section class="container-px mx-auto max-w-[90rem] pb-6">
+  <div class="grid-lines relative overflow-hidden rounded-[2rem] bg-ink-950 px-6 py-16 text-white sm:rounded-[2.5rem] sm:px-12 sm:py-20 lg:px-20 lg:py-28">
+    <div class="pointer-events-none absolute -top-40 -right-40 h-[28rem] w-[28rem] rounded-full bg-signal-500/25 blur-[120px]" aria-hidden="true"></div>
+    <div class="relative grid gap-10 lg:grid-cols-12 lg:items-end">
+      <h2 class="display text-[clamp(2.2rem,5vw,4.5rem)] text-balance lg:col-span-8">{title}</h2>
+      <div class="lg:col-span-4">
+        <p class="text-ink-300">{description}</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <Button href="/contact" size="lg">Request a quote</Button>
+          <Button href={`tel:${SITE.phoneLinks[0]}`} variant="ghost-light" size="lg" arrow={false}>{SITE.phone[0]}</Button>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="lane-line opacity-40"></div>
 </section>

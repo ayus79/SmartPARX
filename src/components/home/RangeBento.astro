@@ -1,0 +1,86 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+
+const all = await getCollection('products');
+const byId = (id: string) => all.find((p) => p.id === id)!;
+
+// Bento order and spans, chosen by photo strength: the branded 4-pole shot leads.
+const tiles: { product: CollectionEntry<'products'>; span: string; label: string }[] = [
+  { product: byId('four-pole-suspended'), span: 'lg:col-span-2 lg:row-span-2', label: 'Heavy duty' },
+  { product: byId('puzzle-parking'), span: '', label: 'Multi-level' },
+  { product: byId('triple-stacker'), span: '', label: 'Multi-level' },
+  { product: byId('pit-puzzle'), span: '', label: 'Below grade' },
+  { product: byId('three-pole-2l3ps'), span: '', label: 'Heavy duty' },
+  { product: byId('customized'), span: 'lg:col-span-2', label: '1.8 – 10 m' },
+];
+const compact = [byId('single-post'), byId('two-wheeler')];
+---
+
+<section class="section-py" aria-labelledby="systems-title">
+  <div class="container-px mx-auto max-w-[90rem]">
+    <div class="grid gap-8 lg:grid-cols-12 lg:items-end">
+      <div class="lg:col-span-7">
+        <p class="kicker">02 - Beyond the stacker</p>
+        <h2 id="systems-title" class="display mt-6 text-[clamp(2.4rem,5vw,4.5rem)] text-ink-900">
+          From one extra car<br />to a whole parking floor.
+        </h2>
+      </div>
+      <p class="max-w-md text-ink-600 lg:col-span-5 lg:justify-self-end">
+        Heavy-duty frames for wide platforms, puzzle and pit systems for dense sites, and custom builds around walls and D-walls - all from our own production units.
+      </p>
+    </div>
+
+    <ul class="mt-14 grid auto-rows-[20rem] grid-cols-1 gap-4 sm:grid-cols-2 lg:mt-20 lg:auto-rows-[18rem] lg:grid-cols-4">
+      {tiles.map(({ product, span, label }) => (
+        <li class:list={['reveal', span]}>
+          <a href={`/products/${product.id}`} class="group relative flex h-full overflow-hidden rounded-[1.75rem] bg-ink-900">
+            {product.data.image && (
+              <Image
+                src={product.data.image}
+                alt={product.data.title}
+                widths={[480, 800, 1200]}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                class="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.2s] ease-out-expo group-hover:scale-105"
+                loading="lazy"
+              />
+            )}
+            <div class="absolute inset-0 bg-gradient-to-t from-ink-950/90 via-ink-950/25 to-transparent"></div>
+            <span class="absolute top-4 left-4 rounded-full bg-white/90 px-3 py-1 font-mono text-[10px] font-medium uppercase tracking-wider text-ink-900 backdrop-blur">
+              {label}
+            </span>
+            <div class="relative mt-auto flex w-full items-end justify-between gap-4 p-6">
+              <div>
+                <h3 class="font-display text-2xl font-semibold tracking-tight text-white">{product.data.shortName}</h3>
+                <p class="mt-1 text-sm text-white/75">{product.data.capacity}</p>
+              </div>
+              <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-ink-900 transition-transform duration-500 ease-out-expo group-hover:-rotate-45 group-hover:bg-signal-500">
+                <svg viewBox="0 0 24 24" fill="none" class="h-4 w-4" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              </span>
+            </div>
+          </a>
+        </li>
+      ))}
+      <li class="reveal lg:col-span-2">
+        <div class="flex h-full flex-col justify-between rounded-[1.75rem] border border-paper-300 bg-white p-6 sm:p-8">
+          <p class="font-mono text-[11px] uppercase tracking-wider text-ink-500">Also for tight spaces</p>
+          <ul class="divide-y divide-paper-300">
+            {compact.map((p) => (
+              <li>
+                <a href={`/products/${p.id}`} class="group flex items-center justify-between gap-4 py-4">
+                  <span>
+                    <span class="block font-display text-xl font-semibold tracking-tight text-ink-900">{p.data.shortName}</span>
+                    <span class="mt-0.5 block text-sm text-ink-500">{p.data.capacity} · {p.data.platformSizes}</span>
+                  </span>
+                  <span class="link-arrow text-signal-600">
+                    <svg viewBox="0 0 24 24" fill="none" class="h-5 w-5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>

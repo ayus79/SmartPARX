@@ -1,0 +1,53 @@
+---
+import { Image } from 'astro:assets';
+import Button from '../Button.astro';
+import { MANUFACTURING_STEPS, SITE } from '../../lib/site';
+import unit1 from '../../assets/images/factory/unit-1.jpg';
+import unit2 from '../../assets/images/factory/unit-2.jpg';
+---
+
+<section class="section-py bg-white" aria-labelledby="made-title">
+  <div class="container-px mx-auto grid max-w-[90rem] gap-14 lg:grid-cols-12 lg:gap-10">
+    <div class="relative lg:col-span-6">
+      <div class="grid grid-cols-5 gap-4">
+        <figure class="reveal col-span-3">
+          <Image src={unit1} alt="SmartPARX manufacturing Unit 1, Vatva GIDC, Ahmedabad" widths={[480, 800]} sizes="(min-width: 1024px) 30vw, 60vw" class="aspect-[3/4] w-full rounded-[1.5rem] object-cover" loading="lazy" />
+          <figcaption class="mt-3 font-mono text-[11px] uppercase tracking-wider text-ink-500">Unit 1 · Vatva GIDC</figcaption>
+        </figure>
+        <figure class="reveal col-span-2 mt-24">
+          <Image src={unit2} alt="SmartPARX manufacturing Unit 2, Ahmedabad" widths={[400, 640]} sizes="(min-width: 1024px) 20vw, 40vw" class="aspect-[3/4] w-full rounded-[1.5rem] object-cover" loading="lazy" />
+          <figcaption class="mt-3 font-mono text-[11px] uppercase tracking-wider text-ink-500">Unit 2</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="lg:col-span-5 lg:col-start-8">
+      <p class="kicker">04 - Made in Ahmedabad</p>
+      <h2 id="made-title" class="display mt-6 text-[clamp(2.2rem,4.4vw,3.75rem)] text-ink-900">
+        We make the steel <em class="font-normal not-italic text-ink-500">and</em> the hydraulics.
+      </h2>
+      <p class="mt-6 text-lg leading-relaxed text-pretty text-ink-600">
+        Founded by {SITE.founder} in {SITE.founded}, SmartPARX runs two production units in Ahmedabad. Our partnership with Shalin Hydraulics makes us the only brand in the market with indigenous hydraulic solutions <em>and</em> an in-house manufacturing plant - so cylinders, power units and structures are built and tested under one roof.
+      </p>
+
+      <ol class="mt-10 grid gap-px overflow-hidden rounded-2xl border border-paper-300 bg-paper-300 sm:grid-cols-2">
+        {MANUFACTURING_STEPS.map((step, i) => (
+          <li class="bg-white p-5">
+            <span class="font-mono text-[11px] text-signal-600">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="mt-2 font-display text-base font-semibold tracking-tight text-ink-900">{step.title}</h3>
+            <p class="mt-1 text-sm leading-relaxed text-ink-500">{step.detail}</p>
+          </li>
+        ))}
+      </ol>
+
+      <div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+        <Button href="/about" variant="dark">Our story</Button>
+        <ul class="flex flex-wrap gap-2">
+          {SITE.certifications.map((c) => (
+            <li class="rounded-full border border-paper-300 px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-ink-600">{c}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

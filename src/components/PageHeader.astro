@@ -1,0 +1,24 @@
+---
+import Breadcrumbs from './Breadcrumbs.astro';
+
+interface Props {
+  kicker: string;
+  title: string;
+  intro?: string;
+  crumbs: { label: string; href: string }[];
+}
+
+const { kicker, title, intro, crumbs } = Astro.props;
+---
+
+<section class="container-px mx-auto max-w-[90rem] pt-8 pb-14 sm:pt-12 sm:pb-20">
+  <Breadcrumbs items={crumbs} />
+  <div class="mt-12 grid gap-8 lg:mt-16 lg:grid-cols-12 lg:items-end">
+    <div class="lg:col-span-8">
+      <p class="kicker">{kicker}</p>
+      <h1 class="display mt-6 text-[clamp(2.75rem,7vw,6.25rem)] text-balance text-ink-900" set:html={title} />
+    </div>
+    {intro && <p class="max-w-md text-lg leading-relaxed text-pretty text-ink-600 lg:col-span-4 lg:pb-2">{intro}</p>}
+  </div>
+  <slot />
+</section>

@@ -1,0 +1,193 @@
+---
+// Interactive stacker sizing tool built on the brochure's "Parking Stacker Guidelines".
+import { HEIGHT_GUIDE, WIDTH_GUIDE } from '../lib/site';
+import Button from './Button.astro';
+
+interface Props {
+  heading?: boolean;
+}
+
+const { heading = true } = Astro.props;
+const data = JSON.stringify({ heights: HEIGHT_GUIDE, widths: WIDTH_GUIDE });
+const fmt = (n: number) => n.toLocaleString('en-IN');
+const d = { h: HEIGHT_GUIDE[0], w: WIDTH_GUIDE[1] };
+---
+
+<section id="planner" class="section-py scroll-mt-20" aria-labelledby={heading ? 'planner-title' : undefined}>
+  <div class="container-px mx-auto max-w-[90rem]">
+    {heading && (
+      <div class="grid gap-8 lg:grid-cols-12 lg:items-end">
+        <div class="lg:col-span-7">
+          <p class="kicker">03 - Will it fit?</p>
+          <h2 id="planner-title" class="display mt-6 text-[clamp(2.4rem,5vw,4.5rem)] text-ink-900">
+            Size your basement<br />in thirty seconds.
+          </h2>
+        </div>
+        <p class="max-w-md text-ink-600 lg:col-span-5 lg:justify-self-end">
+          Pick the cars you'll stack and how many bays sit side by side. We'll give you the clear height, column spacing and driveway our engineers plan for.
+        </p>
+      </div>
+    )}
+
+    <div class:list={['grid gap-4 lg:grid-cols-12', heading && 'mt-14 lg:mt-20']} data-planner={data}>
+      <form class="rounded-[1.75rem] border border-paper-300 bg-white p-6 sm:p-8 lg:col-span-5" onsubmit="return false">
+        <fieldset>
+          <legend class="font-mono text-[11px] uppercase tracking-wider text-ink-500">Upper + lower car</legend>
+          <div class="mt-3 grid grid-cols-3 gap-2">
+            {HEIGHT_GUIDE.map((h, i) => (
+              <label class="cursor-pointer">
+                <input type="radio" name="combo" value={i} checked={i === 0} class="peer sr-only" />
+                <span class="flex h-full items-center justify-center rounded-xl border border-paper-300 px-2 py-3 text-center text-sm font-medium text-ink-700 transition-colors peer-checked:border-ink-900 peer-checked:bg-ink-900 peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-signal-500">
+                  {h.combo}
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset class="mt-7">
+          <legend class="font-mono text-[11px] uppercase tracking-wider text-ink-500">Bays side by side</legend>
+          <div class="mt-3 grid grid-cols-3 gap-2">
+            {[1, 2, 3].map((n) => (
+              <label class="cursor-pointer">
+                <input type="radio" name="bays" value={n} checked={n === 1} class="peer sr-only" />
+                <span class="flex items-center justify-center rounded-xl border border-paper-300 py-3 text-sm font-medium text-ink-700 transition-colors peer-checked:border-ink-900 peer-checked:bg-ink-900 peer-checked:text-white peer-focus-visible:ring-2 peer-focus-visible:ring-signal-500">
+                  {n} {n === 1 ? 'bay' : 'bays'}
+                </span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <div class="mt-7">
+          <label for="platform" class="font-mono text-[11px] uppercase tracking-wider text-ink-500">Usable platform width</label>
+          <div class="relative mt-3">
+          <select id="platform" name="platform" class="w-full appearance-none rounded-xl border border-paper-300 bg-paper py-3 pr-10 pl-4 text-sm font-medium text-ink-900">
+            {WIDTH_GUIDE.map((w) => (
+              <option value={w.platform} selected={w.platform === 2200}>
+                {fmt(w.platform)} mm{w.platform === 2200 ? ' - recommended minimum' : w.platform < 2200 ? ' - tight for most cars' : ''}
+              </option>
+            ))}
+          </select>
+          <svg viewBox="0 0 24 24" fill="none" class="pointer-events-none absolute top-1/2 right-4 h-4 w-4 -translate-y-1/2 text-ink-500" aria-hidden="true"><path d="m6 9 6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          </div>
+        </div>
+
+        <div class="mt-7 grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <div>
+            <label for="clear" class="font-mono text-[11px] uppercase tracking-wider text-ink-500">Your clear height (mm)</label>
+            <input id="clear" name="clear" type="number" inputmode="numeric" min="2000" max="10000" step="10" placeholder="e.g. 3600" class="mt-3 w-full rounded-xl border border-paper-300 bg-paper px-4 py-3 text-sm font-medium tabular-nums text-ink-900 placeholder:text-ink-400" />
+          </div>
+          <label class="flex cursor-pointer items-center gap-3 self-end rounded-xl border border-paper-300 px-4 py-3 text-sm text-ink-700">
+            <input type="checkbox" name="long" class="h-4 w-4 accent-[#00a456]" />
+            Cars longer than 4.7 m
+          </label>
+        </div>
+      </form>
+
+      <div class="relative flex flex-col overflow-hidden rounded-[1.75rem] bg-ink-950 p-6 text-white sm:p-8 lg:col-span-7" aria-live="polite">
+        <div class="grid gap-6 sm:grid-cols-[1fr_auto]">
+          <dl class="grid grid-cols-2 gap-x-6 gap-y-7">
+            <div class="col-span-2">
+              <dt class="font-mono text-[11px] uppercase tracking-wider text-ink-400">Clear height required</dt>
+              <dd class="display mt-2 text-6xl tabular-nums sm:text-7xl"><span data-out="height">{fmt(d.h.total)}</span><span class="ml-2 text-2xl text-ink-400">mm</span></dd>
+            </div>
+            <div>
+              <dt class="font-mono text-[11px] uppercase tracking-wider text-ink-400">Width between columns</dt>
+              <dd class="mt-1.5 text-2xl font-semibold tabular-nums"><span data-out="width">{fmt(d.w.bays[0])}</span> mm</dd>
+            </div>
+            <div>
+              <dt class="font-mono text-[11px] uppercase tracking-wider text-ink-400">Lower level clear</dt>
+              <dd class="mt-1.5 text-2xl font-semibold tabular-nums"><span data-out="lower">{fmt(d.h.lower)}</span> mm</dd>
+            </div>
+            <div>
+              <dt class="font-mono text-[11px] uppercase tracking-wider text-ink-400">Bay length</dt>
+              <dd class="mt-1.5 text-2xl font-semibold tabular-nums">5,150 mm</dd>
+            </div>
+            <div>
+              <dt class="font-mono text-[11px] uppercase tracking-wider text-ink-400">Min. driveway</dt>
+              <dd class="mt-1.5 text-2xl font-semibold tabular-nums"><span data-out="drive">5,500</span> mm</dd>
+            </div>
+          </dl>
+
+          <!-- Elevation diagram: two platforms, dimension line scales with required height. -->
+          <svg viewBox="0 0 140 220" class="hidden w-36 sm:block" aria-hidden="true">
+            <line x1="10" x2="130" y1="210" y2="210" stroke="#5d6a62" />
+            <rect x="22" y="20" width="7" height="190" fill="#2e3a33" />
+            <rect x="111" y="20" width="7" height="190" fill="#2e3a33" />
+            <g data-diagram="upper">
+              <rect x="26" y="104" width="88" height="4" fill="#f2c200" />
+              <path d="M36 104v-9q0-4 4-5l10-2 9-9h24l8 9 9 2q4 1 4 5v9Z" fill="#b7bfba" />
+            </g>
+            <path d="M36 210v-9q0-4 4-5l10-2 9-9h24l8 9 9 2q4 1 4 5v9Z" fill="#00a456" />
+            <g stroke="#1fc06f">
+              <line x1="134" x2="134" y1="20" y2="210" />
+              <line x1="130" x2="138" y1="20" y2="20" />
+              <line x1="130" x2="138" y1="210" y2="210" />
+            </g>
+          </svg>
+        </div>
+
+        <div class="mt-8 rounded-2xl border border-white/10 p-5" data-out="verdict">
+          <p class="text-sm text-ink-300">Enter your clear height to check whether a stacker fits - or whether a pit system is the better route.</p>
+        </div>
+
+        <div class="mt-auto flex flex-col gap-4 pt-8 sm:flex-row sm:items-center sm:justify-between">
+          <p class="max-w-sm text-xs leading-relaxed text-ink-400">
+            Heights exclude fire-suppression pipes, plumbing and other services. Column clearance varies ±100 mm between models.
+          </p>
+          <Button href="/contact" size="md">Get a site survey</Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  type Guide = {
+    heights: { combo: string; total: number; lower: number }[];
+    widths: { platform: number; bays: number[] }[];
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-planner]').forEach((root) => {
+    const guide: Guide = JSON.parse(root.dataset.planner!);
+    const form = root.querySelector('form')!;
+    const out = (k: string) => root.querySelector<HTMLElement>(`[data-out="${k}"]`)!;
+    const upper = root.querySelector<SVGGElement>('[data-diagram="upper"]');
+    const fmt = (n: number) => n.toLocaleString('en-IN');
+
+    const update = () => {
+      const f = new FormData(form);
+      const h = guide.heights[Number(f.get('combo'))];
+      const bays = Number(f.get('bays'));
+      const w = guide.widths.find((x) => x.platform === Number(f.get('platform')))!;
+      const clear = Number(f.get('clear'));
+
+      out('height').textContent = fmt(h.total);
+      out('lower').textContent = fmt(h.lower);
+      out('width').textContent = fmt(w.bays[bays - 1]);
+      out('drive').textContent = f.get('long') ? '6,000' : '5,500';
+      // Upper platform height in the diagram tracks the lower-level clearance.
+      upper?.setAttribute('transform', `translate(0 ${h.lower === 1700 ? 14 : 0})`);
+
+      const v = out('verdict');
+      if (!clear) {
+        v.className = 'mt-8 rounded-2xl border border-white/10 p-5';
+        v.innerHTML = '<p class="text-sm text-ink-300">Enter your clear height to check whether a stacker fits - or whether a pit system is the better route.</p>';
+        return;
+      }
+      const diff = clear - h.total;
+      if (diff >= 0) {
+        v.className = 'mt-8 rounded-2xl border border-signal-500/40 bg-signal-500/10 p-5';
+        v.innerHTML = `<p class="font-semibold text-signal-400">✓ A ${h.combo} stacker fits - ${fmt(diff)} mm to spare.</p><p class="mt-1 text-sm text-ink-300">Check that services below the slab don’t eat into that margin.</p>`;
+      } else {
+        v.className = 'mt-8 rounded-2xl border border-amber-400/40 bg-amber-400/10 p-5';
+        v.innerHTML = `<p class="font-semibold text-amber-400">${fmt(-diff)} mm short for ${h.combo}.</p><p class="mt-1 text-sm text-ink-300">Try a lower combination, or consider a <a class="underline underline-offset-2 hover:text-white" href="/products/pit-puzzle">pit system</a> that goes down instead of up.</p>`;
+      }
+    };
+
+    form.addEventListener('input', update);
+    form.addEventListener('change', update);
+    update();
+  });
+</script>
