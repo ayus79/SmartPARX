@@ -5,55 +5,47 @@ import { SITE, STATS } from '../../lib/site';
 import heroImage from '../../assets/images/projects/two-level-1.jpg';
 ---
 
-<section class="relative">
-  <div class="container-px mx-auto max-w-[90rem] pt-10 sm:pt-16 lg:pt-20">
-    <div class="grid items-end gap-10 lg:grid-cols-12">
-      <div class="lg:col-span-8">
-        <p class="kicker">Ahmedabad · Since {SITE.founded} · ISO 9001:2015</p>
-        <h1 class="display mt-7 text-display-hero text-ink-900">
-          <span class="lg:whitespace-nowrap">Automated car parking systems,</span><br />
-          <span class="text-signal-600 lg:whitespace-nowrap">designed and built <span class="whitespace-nowrap">in-house.</span></span>
-        </h1>
-      </div>
-      <div class="lg:col-span-4 lg:pb-2">
-        <p class="max-w-md text-lg leading-relaxed text-pretty text-ink-600">
-          Two-post stackers, puzzle, pit and heavy-duty systems for residential towers, commercial complexes and showrooms. 2500+ installed since {SITE.founded}, backed by a <span class="whitespace-nowrap">2 + 5 year</span> warranty.
-        </p>
-        <div class="mt-8 flex flex-wrap gap-3">
-          <Button href="/contact" size="lg">Free site survey</Button>
-          <Button href="#planner" variant="outline" size="lg" arrow={false}>Will it fit?</Button>
-        </div>
-      </div>
+<!-- Split hero: copy left, photo right. On desktop it fits the first screen (viewport minus the 4.5rem header). -->
+<section class="container-px mx-auto max-w-[90rem] pt-8 pb-4 sm:pt-12 lg:grid lg:h-[calc(100svh-4.5rem)] lg:max-h-[58rem] lg:min-h-[38rem] lg:grid-cols-12 lg:gap-12 lg:py-6">
+  <div class="flex flex-col justify-center lg:col-span-6 lg:py-6">
+    <p class="kicker">Ahmedabad · Since {SITE.founded} · ISO 9001:2015</p>
+    <h1 class="display mt-6 text-display-hero text-balance text-ink-900 lg:mt-7">
+      Automated car parking systems, <span class="text-signal-600">designed and built <span class="whitespace-nowrap">in-house.</span></span>
+    </h1>
+    <p class="mt-6 max-w-lg text-lg leading-relaxed text-pretty text-ink-600 lg:mt-7">
+      Two-post stackers, puzzle, pit and heavy-duty systems for residential towers, commercial complexes and showrooms. 2500+ installed since {SITE.founded}, backed by a <span class="whitespace-nowrap">2 + 5 year</span> warranty.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3 lg:mt-9">
+      <Button href="/contact" size="lg">Free site survey</Button>
+      <Button href="#planner" variant="outline" size="lg" arrow={false}>Will it fit?</Button>
     </div>
   </div>
 
-  <div class="container-px mx-auto mt-12 max-w-[90rem] sm:mt-16">
-    <div class="relative overflow-hidden rounded-[1.75rem] bg-ink-900 sm:rounded-[2.5rem]">
-      <Picture
-        src={heroImage}
-        formats={['avif', 'webp']}
-        widths={[640, 960, 1440, 1920, 2400]}
-        sizes="(min-width: 1440px) 1440px, 100vw"
-        alt="A row of SmartPARX two-post parking stackers installed in a basement car park"
-        loading="eager"
-        fetchpriority="high"
-        class="aspect-[4/5] w-full object-cover sm:aspect-[16/10] lg:aspect-[21/9]"
-      />
-      <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-950/90 via-ink-950/20 to-transparent"></div>
+  <div class="relative mt-10 overflow-hidden rounded-[1.75rem] bg-ink-900 sm:rounded-[2.25rem] lg:col-span-6 lg:mt-0 lg:h-full">
+    <Picture
+      src={heroImage}
+      formats={['avif', 'webp']}
+      widths={[640, 960, 1280, 1600]}
+      sizes="(min-width: 1440px) 680px, (min-width: 1024px) 48vw, 100vw"
+      alt="A row of SmartPARX two-post parking stackers installed in a basement car park"
+      loading="eager"
+      fetchpriority="high"
+      class="aspect-[4/5] w-full object-cover object-[60%_center] sm:aspect-[4/3] lg:aspect-auto lg:h-full"
+    />
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-950/95 via-ink-950/30 via-45% to-transparent"></div>
 
-      <div class="absolute top-5 left-5 flex items-center gap-2 rounded-full bg-white/90 py-1.5 pr-4 pl-1.5 text-xs font-medium text-ink-900 backdrop-blur sm:top-7 sm:left-7">
-        <span class="rounded-full bg-signal-500 px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-ink-950">Installed</span>
-        Two-post stacker row
-      </div>
-
-      <dl class="absolute inset-x-0 bottom-0 grid grid-cols-2 text-white sm:grid-cols-4">
-        {STATS.map((stat, i) => (
-          <div class:list={['flex flex-col-reverse p-5 sm:p-7 lg:p-9', i > 0 && 'sm:border-l sm:border-white/15']}>
-            <dt class="mt-1.5 text-xs leading-snug text-white/75 sm:text-sm">{stat.label}</dt>
-            <dd class="display text-4xl tabular-nums sm:text-5xl lg:text-6xl">{stat.value}</dd>
-          </div>
-        ))}
-      </dl>
+    <div class="absolute top-4 left-4 flex items-center gap-2 rounded-full bg-white/90 py-1.5 pr-4 pl-1.5 text-xs font-medium text-ink-900 backdrop-blur sm:top-5 sm:left-5">
+      <span class="rounded-full bg-signal-500 px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-ink-950">Installed</span>
+      Two-post stacker row
     </div>
+
+    <dl class="absolute inset-x-0 bottom-0 grid grid-cols-2 gap-px text-white xl:grid-cols-4">
+      {STATS.map((stat, i) => (
+        <div class:list={['flex flex-col-reverse px-5 pt-4 pb-5 sm:px-6 sm:pb-6', i % 2 === 1 && 'border-l border-white/15', i > 0 && 'xl:border-l xl:border-white/15']}>
+          <dt class="mt-1 text-xs leading-snug text-white/75">{stat.label}</dt>
+          <dd class="display text-3xl tabular-nums sm:text-4xl">{stat.value}</dd>
+        </div>
+      ))}
+    </dl>
   </div>
 </section>
