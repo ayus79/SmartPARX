@@ -52,7 +52,7 @@ const isActive = (href: string) => currentPath === href || currentPath.startsWit
 <div id="mobile-menu" class="fixed inset-x-0 top-[4.5rem] bottom-0 z-[45] hidden flex-col overflow-y-auto bg-paper lg:hidden">
     <nav class="container-px flex flex-1 flex-col justify-center gap-1" aria-label="Mobile">
       {NAV_LINKS.map((link, i) => (
-        <a href={link.href} class="flex items-baseline gap-4 border-b border-paper-300 py-4 font-display text-3xl font-semibold tracking-tight text-ink-900">
+        <a href={link.href} class="flex items-baseline gap-4 border-b border-paper-300 py-4 display text-display-3 text-ink-900">
           <span class="font-mono text-xs text-ink-500">0{i + 1}</span>
           {link.label}
         </a>

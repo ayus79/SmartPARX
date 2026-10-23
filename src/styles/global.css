@@ -193,3 +193,26 @@
     text-wrap: pretty;
   }
 }
+
+/*
+ * Heading scale — the only sizes headings may use. Each step sits clearly below the one above at every width.
+ *   display-hero  homepage H1 only; vw-based so its two lines fit the 8-column hero   38 → 65px
+ *   display-1     every other page H1                                                36 → 54px
+ *   display-2     section H2                                                         30 → 44px
+ *   display-3     sub-section heading, pull quotes                                   24 → 34px
+ */
+@utility text-display-hero {
+  font-size: clamp(2.4rem, 4.3vw, 4.05rem);
+}
+
+@utility text-display-1 {
+  font-size: clamp(2.25rem, 1.5rem + 1.8vw, 3.375rem);
+}
+
+@utility text-display-2 {
+  font-size: clamp(1.875rem, 1.3rem + 1.6vw, 2.75rem);
+}
+
+@utility text-display-3 {
+  font-size: clamp(1.5rem, 1.25rem + 0.9vw, 2.125rem);
+}

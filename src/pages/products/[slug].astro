@@ -99,7 +99,7 @@ const productSchema = {
       <div class="lg:col-span-5">
         <div class="lg:sticky lg:top-28">
           <a href={`/products#${data.family}`} class="kicker hover:text-ink-900">{FAMILIES[data.family].label}</a>
-          <h1 class="display mt-5 text-[clamp(2.4rem,4.6vw,4rem)] text-ink-900">{data.title.replace('Two Post Parking Stacker - ', '')}</h1>
+          <h1 class="display mt-5 text-display-1 text-ink-900">{data.title.replace('Two Post Parking Stacker - ', '')}</h1>
           {data.family === 'two-post' && <p class="mt-2 font-display text-lg text-ink-500">Two-post parking stacker</p>}
           <p class="mt-6 text-lg leading-relaxed text-pretty text-ink-600">{data.summary}</p>
 
@@ -140,7 +140,7 @@ const productSchema = {
   <section class="container-px mx-auto max-w-[90rem] section-py">
     <div class="grid gap-14 lg:grid-cols-12">
       <div class="lg:col-span-5">
-        <h2 class="font-display text-3xl font-semibold tracking-tight text-ink-900">Technical specifications</h2>
+        <h2 class="display text-display-3 text-ink-900">Technical specifications</h2>
         <dl class="mt-6 border-t border-paper-300">
           {specs.map(([label, value]) => (
             <div class="spec-row"><dt>{label}</dt><dd>{value}</dd></div>
@@ -186,7 +186,7 @@ const productSchema = {
   </section>
 
   <section class="container-px mx-auto max-w-[90rem] border-t border-paper-300 py-16 sm:py-20">
-    <h2 class="font-display text-3xl font-semibold tracking-tight text-ink-900">Compare with</h2>
+    <h2 class="display text-display-3 text-ink-900">Compare with</h2>
     <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {related.map((p) => <li><ProductCard product={p} /></li>)}
     </ul>

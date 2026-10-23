@@ -90,7 +90,7 @@ console.log(`imported ${done}/${MAP.length} files into ${OUT}`);
 const og = Buffer.from(`<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
   <defs><linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop offset="0.25" stop-color="#0b110d" stop-opacity="0"/><stop offset="1" stop-color="#0b110d" stop-opacity="0.92"/></linearGradient></defs>
   <rect width="1200" height="630" fill="url(#g)"/>
-  <text x="64" y="470" font-family="Helvetica Neue, Arial, sans-serif" font-size="78" font-weight="700" letter-spacing="-3" fill="#fff">Twice the cars. <tspan fill="#1fc06f">Same floor.</tspan></text>
+  <text x="64" y="400" font-family="Helvetica Neue, Arial, sans-serif" font-size="68" font-weight="700" letter-spacing="-2.5" fill="#fff">Automated car parking systems,</text><text x="64" y="476" font-family="Helvetica Neue, Arial, sans-serif" font-size="68" font-weight="700" letter-spacing="-2.5" fill="#1fc06f">designed and built in-house.</text>
   <text x="64" y="540" font-family="Helvetica Neue, Arial, sans-serif" font-size="30" fill="#d8d5ca">SmartPARX · Car parking systems · 2500+ installed · Ahmedabad</text>
   <text x="64" y="96" font-family="Helvetica Neue, Arial, sans-serif" font-size="44" font-weight="700" letter-spacing="-1.5" fill="#fff">Smart<tspan fill="#1fc06f">PARX</tspan></text>
 </svg>`);
