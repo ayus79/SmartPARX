@@ -21,7 +21,7 @@
   --color-ink-400: #8a958e;
   --color-ink-300: #b7bfba;
 
-  --color-paper: #f4f3ee;
+  --color-paper: #ffffff;
   --color-paper-200: #e7e5dd;
   --color-paper-300: #d8d5ca;
 
@@ -79,7 +79,7 @@
 }
 
 @layer components {
-  /* Index label: "01 - The Range". Numbered like catalogue sections. */
+  /* Index label: "01 — The Range". Numbered like catalogue sections. */
   .kicker {
     display: inline-flex;
     align-items: center;
@@ -118,7 +118,7 @@
     background-size: 56px 56px;
   }
 
-  /* Equipment safety striping (yellow/ink) - used as a thin accent only. */
+  /* Equipment safety striping (yellow/ink) — used as a thin accent only. */
   .hazard {
     background-image: repeating-linear-gradient(
       -45deg,

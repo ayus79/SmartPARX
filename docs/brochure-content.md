@@ -257,6 +257,6 @@ Moksha Buildcon, Corus Infrastructure, Nakshatra, Triveni Infra Build, Anushri, 
 | Tagline | Automated & Mechanical Parking Solutions | **Do it the smart way** |
 | Facility claim | "10,000+ sq. ft." | Not in brochure: two units (Unit 1, Unit 2); confirm size with client |
 | Product catalog | Generic 7 families, unverified specs (PLC, lift speeds, 415V) | Use the real models in §4 (Economy/Premium/Premium+/Luxury+, 2L3PS+, 4-pole, single post, 2-wheeler, pit) |
-| Certifications | none shown | ISO 9001:2015, Startup India, Make in India |
+| Certifications | none shown | ISO 9001:2015, Make in India |
 | Warranty | none shown | 2 yr zero-pay + 5 yr with AMC |
 | EV | none | All systems EV-charging compatible |

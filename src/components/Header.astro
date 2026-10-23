@@ -11,13 +11,13 @@ const isActive = (href: string) => currentPath === href || currentPath.startsWit
   <div class="container-px mx-auto flex h-[4.5rem] max-w-[90rem] items-center justify-between gap-6">
     <Logo />
 
-    <nav class="hidden items-center gap-1 lg:flex" aria-label="Primary">
+    <nav class="hidden items-center gap-0.5 lg:flex xl:gap-1" aria-label="Primary">
       {NAV_LINKS.map((link) => (
         <a
           href={link.href}
           aria-current={isActive(link.href) ? 'page' : undefined}
           class:list={[
-            'rounded-full px-4 py-2 text-sm font-medium transition-colors',
+            'whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium transition-colors xl:px-4',
             isActive(link.href) ? 'bg-ink-900 text-white' : 'text-ink-700 hover:bg-paper-200 hover:text-ink-900',
           ]}
         >
@@ -27,7 +27,7 @@ const isActive = (href: string) => currentPath === href || currentPath.startsWit
     </nav>
 
     <div class="hidden items-center gap-5 lg:flex">
-      <a href={`tel:${SITE.phoneLinks[0]}`} class="text-sm font-semibold tabular-nums text-ink-900 hover:text-signal-600">
+      <a href={`tel:${SITE.phoneLinks[0]}`} class="hidden whitespace-nowrap text-sm font-semibold tabular-nums text-ink-900 hover:text-signal-600 xl:inline">
         {SITE.phone[0]}
       </a>
       <Button href="/contact" variant="dark">Get a quote</Button>
@@ -51,7 +51,7 @@ const isActive = (href: string) => currentPath === href || currentPath.startsWit
 <!-- Kept outside <header>: its backdrop-filter would otherwise trap this fixed overlay inside the header box. -->
 <div id="mobile-menu" class="fixed inset-x-0 top-[4.5rem] bottom-0 z-[45] hidden flex-col overflow-y-auto bg-paper lg:hidden">
     <nav class="container-px flex flex-1 flex-col justify-center gap-1" aria-label="Mobile">
-      {[...NAV_LINKS, { label: 'Contact', href: '/contact' }].map((link, i) => (
+      {NAV_LINKS.map((link, i) => (
         <a href={link.href} class="flex items-baseline gap-4 border-b border-paper-300 py-4 font-display text-3xl font-semibold tracking-tight text-ink-900">
           <span class="font-mono text-xs text-ink-500">0{i + 1}</span>
           {link.label}

@@ -30,7 +30,7 @@ export const SITE = {
   hours: 'Mon – Fri · 10:00 AM – 6:00 PM',
   mapEmbedUrl:
     'https://www.google.com/maps?q=302+Atlantis+One+Sagar+Sangeet+Cross+Roads+Ahmedabad+380060&output=embed',
-  certifications: ['ISO 9001:2015', 'Startup India', 'Make in India'],
+  certifications: ['ISO 9001:2015', 'Make in India'],
   // Add real profile URLs here once created; empty entries are not rendered or added to schema.
   social: {
     facebook: '',
@@ -49,11 +49,12 @@ export const STATS = [
 
 export const NAV_LINKS = [
   { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
   { label: 'Products', href: '/products' },
+  { label: 'Services', href: '/services' },
   { label: 'Planning Guide', href: '/planning-guide' },
   { label: 'Projects', href: '/projects' },
-  { label: 'Services', href: '/services' },
-  { label: 'About', href: '/about' },
+  { label: 'Contact Us', href: '/contact' },
 ] as const;
 
 export const MANUFACTURING_STEPS = [

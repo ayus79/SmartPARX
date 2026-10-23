@@ -38,7 +38,6 @@ const social = Object.entries(SITE.social).filter(([, url]) => url);
             {NAV_LINKS.filter((l) => l.href !== '/products').map((link) => (
               <li><a href={link.href} class="text-ink-300 transition-colors hover:text-white">{link.label}</a></li>
             ))}
-            <li><a href="/contact" class="text-ink-300 transition-colors hover:text-white">Contact</a></li>
           </ul>
           {social.length > 0 && (
             <ul class="mt-8 space-y-2.5 text-sm">
@@ -68,7 +67,8 @@ const social = Object.entries(SITE.social).filter(([, url]) => url);
       </nav>
     </div>
 
-    <p class="pointer-events-none mt-20 select-none font-display text-[18vw] leading-[0.8] font-bold tracking-[-0.06em] text-white/[0.04] lg:text-[15rem]" aria-hidden="true">
+    <!-- Solid colour, not alpha: with translucent text, overlapping glyphs stack and show seams. -->
+    <p class="pointer-events-none mt-20 select-none whitespace-nowrap font-display text-[17vw] leading-[0.8] font-bold tracking-[-0.035em] text-[#18211b] lg:text-[14rem]" aria-hidden="true">
       SmartPARX
     </p>
 
