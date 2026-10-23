@@ -131,7 +131,7 @@ const rotarySlots = [52, 92, 132, 172].flatMap((y) => [
       ))}
       <line x1="0" x2="30" y1="96" y2="96" stroke={C.groundLine} stroke-width="1.5" />
       <line x1="290" x2="320" y1="96" y2="96" stroke={C.groundLine} stroke-width="1.5" />
-      <text x="6" y="88" fill={C.label} font-family="ui-monospace, monospace" font-size="9">GL ±0.00</text>
+      <text x="2" y="90" fill={C.label} font-family="ui-monospace, monospace" font-size="8">±0.00</text>
       {[38, 270].map((px) => (
         <rect x={px} y="28" width="12" height="164" fill={C.steel} stroke={C.steelEdge} />
       ))}
@@ -148,7 +148,7 @@ const rotarySlots = [52, 92, 132, 172].flatMap((y) => [
           </g>
         );
       })}
-      <text x="286" y="180" fill={C.label} font-family="ui-monospace, monospace" font-size="9" text-anchor="end">PIT</text>
+      <text x="264" y="140" fill={C.label} font-family="ui-monospace, monospace" font-size="9" text-anchor="end">PIT</text>
     </g>
   )}
 

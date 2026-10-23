@@ -3,9 +3,9 @@ title: Pit Parking Systems
 shortName: Pit Systems
 category: pit
 summary: Underground and sub-level parking that sinks one or more vehicle platforms below grade, ideal where height restrictions rule out above-ground stacking.
-capacity: 2–4 vehicles per bay
-liftSpeed: 4–6 m/min
-levels: "2–4 (below/at grade)"
+capacity: 2-4 vehicles per bay
+liftSpeed: 4-6 m/min
+levels: "2-4 (below/at grade)"
 powerSupply: "415V, 3-phase"
 order: 3
 features:

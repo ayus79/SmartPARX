@@ -3,9 +3,9 @@ title: Puzzle Parking Systems
 shortName: Puzzle Systems
 category: puzzle
 summary: A PLC-controlled matrix of pallets that shift vertically and horizontally like a sliding puzzle, delivering the highest density of any SmartPARX system.
-capacity: 6–20+ vehicles per module
-liftSpeed: 6–10 m/min
-levels: "2–6"
+capacity: 6-20+ vehicles per module
+liftSpeed: 6-10 m/min
+levels: "2-6"
 powerSupply: "415V, 3-phase, PLC control panel"
 order: 4
 features:

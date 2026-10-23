@@ -3,8 +3,8 @@ title: Vertical Circulation Parking System
 shortName: Vertical Circulation
 category: circulation
 summary: A rotary tower system that circulates parking cabins continuously, bringing the next vehicle to ground level in seconds - minimal footprint, maximum density.
-capacity: 20–60+ vehicles per tower
-liftSpeed: 8–12 m/min
+capacity: 20-60+ vehicles per tower
+liftSpeed: 8-12 m/min
 levels: "Tower - up to 20+"
 powerSupply: "415V, 3-phase, PLC control"
 order: 5

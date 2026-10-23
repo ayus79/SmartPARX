@@ -3,9 +3,9 @@ title: Two Wheeler Parking Systems
 shortName: Two Wheeler Systems
 category: two-wheeler
 summary: Multi-tier stacking built specifically for two-wheelers, letting facilities multiply bike parking capacity in a fraction of a car bay's footprint.
-capacity: 2–3 bikes per bay
+capacity: 2-3 bikes per bay
 liftSpeed: Manual / semi-automated glide
-levels: "2–3"
+levels: "2-3"
 powerSupply: "Manual or 230V assisted"
 order: 6
 features:

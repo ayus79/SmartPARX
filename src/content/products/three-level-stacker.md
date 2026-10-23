@@ -4,7 +4,7 @@ shortName: Three Level Stacker
 category: stacker
 summary: Multi-tier vertical expansion of the stacker platform, triple-parking vehicles in the same ground footprint for high-density sites.
 capacity: 3 vehicles per bay
-liftSpeed: 6–8 m/min
+liftSpeed: 6-8 m/min
 levels: "3"
 powerSupply: "415V, 3-phase"
 order: 2

@@ -19,7 +19,7 @@ export const SITE = {
     line2: 'Memdabad Road, Vatva, Daskroi',
     city: 'Ahmedabad, Gujarat 382445, India',
   },
-  hours: 'Mon – Fri: 10:00 AM – 6:00 PM (Sat & Sun Closed)',
+  hours: 'Mon - Fri: 10:00 AM - 6:00 PM',
   mapEmbedUrl:
     'https://www.google.com/maps?q=GIDC+Estate+Vatva+Ahmedabad+Gujarat+382445&output=embed',
   social: {

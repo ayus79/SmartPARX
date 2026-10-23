@@ -4,7 +4,7 @@ shortName: Two Level Stacker
 category: stacker
 summary: A hydraulic post-stacker that doubles usable parking capacity by lifting one vehicle above another - the fastest way to add parking without expanding the footprint.
 capacity: 2 vehicles per bay
-liftSpeed: 6–8 m/min
+liftSpeed: 6-8 m/min
 levels: "2"
 powerSupply: "415V, 3-phase"
 order: 1
