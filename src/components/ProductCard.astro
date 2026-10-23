@@ -1,0 +1,52 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import ParkingVisual from './ParkingVisual.astro';
+import Icon from './Icon.astro';
+import { ArrowRight } from 'lucide-static';
+import { systemLabel, visualFor } from '../lib/visuals';
+
+interface Props {
+  product: CollectionEntry<'products'>;
+}
+
+const { product } = Astro.props;
+const { id, data } = product;
+const code = `SPX-${String(data.order).padStart(2, '0')}`;
+---
+
+<a
+  href={`/products/${id}`}
+  class="group flex flex-col overflow-hidden rounded-lg border border-slate-200 bg-white transition-all hover:-translate-y-1 hover:border-signal-500 hover:shadow-card-hover"
+>
+  <div class="asphalt relative">
+    <div class="absolute inset-x-0 top-0 flex items-center justify-between px-4 py-3 font-mono text-[10px] uppercase tracking-widest">
+      <span class="rounded-sm bg-signal-500 px-1.5 py-0.5 font-bold text-navy-950">{code}</span>
+      <span class="text-slate-400">{systemLabel(data)}</span>
+    </div>
+    <ParkingVisual variant={visualFor(data)} class="block w-full px-5 pt-10 pb-2" />
+  </div>
+  <div class="hazard h-1.5 origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></div>
+
+  <div class="flex flex-1 flex-col p-6">
+    <h3 class="font-display text-xl font-semibold text-navy-900 transition-colors group-hover:text-signal-600">
+      {data.shortName}
+    </h3>
+    <p class="mt-2 text-sm leading-relaxed text-navy-600">{data.summary}</p>
+
+    <dl class="mt-5 grid grid-cols-2 border-y border-slate-200 font-mono text-xs">
+      <div class="py-3 pr-3">
+        <dt class="uppercase tracking-wider text-navy-600/70">Capacity</dt>
+        <dd class="mt-1 font-semibold text-navy-900">{data.capacity}</dd>
+      </div>
+      <div class="border-l border-slate-200 py-3 pl-3">
+        <dt class="uppercase tracking-wider text-navy-600/70">Levels</dt>
+        <dd class="mt-1 font-semibold text-navy-900">{data.levels}</dd>
+      </div>
+    </dl>
+
+    <span class="mt-auto inline-flex items-center gap-1.5 pt-5 text-xs font-bold uppercase tracking-wider text-signal-600">
+      View Specifications
+      <Icon svg={ArrowRight} class="h-4 w-4 transition-transform group-hover:translate-x-1" />
+    </span>
+  </div>
+</a>

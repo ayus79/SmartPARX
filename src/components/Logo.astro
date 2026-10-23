@@ -1,0 +1,16 @@
+---
+interface Props {
+  tone?: 'light' | 'dark';
+}
+
+const { tone = 'dark' } = Astro.props;
+---
+
+<a href="/" class="group flex items-center gap-2.5" aria-label="SmartPARX home">
+  <span class="relative flex h-10 w-10 items-center justify-center rounded-md bg-signal-500 font-display text-2xl font-extrabold text-white outline-2 outline-white -outline-offset-4">
+    P
+  </span>
+  <span class:list={['font-display text-xl font-bold tracking-tight', tone === 'dark' ? 'text-navy-900' : 'text-white']}>
+    Smart<span class="text-signal-500">PARX</span>
+  </span>
+</a>

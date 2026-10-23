@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+---
+
+<Layout title="Page Not Found" description="The page you're looking for doesn't exist." noindex>
+  <section class="section-py bg-navy-950 text-white">
+    <div class="container-px mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+      <p class="font-display text-6xl font-bold text-signal-500">404</p>
+      <h1 class="text-balance font-display text-3xl font-bold sm:text-4xl">Page not found</h1>
+      <p class="max-w-lg text-slate-300">
+        The page you're looking for may have moved or no longer exists. Try one of these instead:
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <Button href="/" size="lg">Back to Home</Button>
+        <Button href="/products" variant="ghost" size="lg">View Products</Button>
+      </div>
+    </div>
+  </section>
+</Layout>

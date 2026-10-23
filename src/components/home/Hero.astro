@@ -1,0 +1,63 @@
+---
+import Button from '../Button.astro';
+import ParkingVisual from '../ParkingVisual.astro';
+import { STATS } from '../../lib/site';
+
+const highlights = ['Manufactured in-house', 'PLC & hydraulic systems', 'Pan-India installation'];
+---
+
+<section class="asphalt overflow-hidden text-white">
+  <div class="relative container-px mx-auto grid max-w-7xl items-center gap-14 pt-16 pb-14 sm:pt-20 lg:grid-cols-12 lg:pt-24 lg:pb-20">
+    <div class="lg:col-span-6">
+      <span class="eyebrow eyebrow-dark">Automated Parking Systems · Since 1989</span>
+      <h1 class="mt-6 text-balance font-display text-4xl font-bold leading-[1.08] sm:text-5xl lg:text-6xl">
+        <span class="text-signal-400">Multiply</span> your parking without adding a single square foot
+      </h1>
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-slate-300">
+        SmartPARX designs, manufactures, and installs stackers, puzzle, pit, and rotary parking systems for hotels, malls, apartments, and commercial towers across India.
+      </p>
+      <ul class="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs uppercase tracking-wider text-slate-400">
+        {highlights.map((item) => (
+          <li class="flex items-center gap-2">
+            <span class="h-1.5 w-1.5 bg-signal-400"></span>
+            {item}
+          </li>
+        ))}
+      </ul>
+      <div class="mt-10 flex flex-wrap gap-4">
+        <Button href="/contact" size="lg">Get Free Site Assessment</Button>
+        <Button href="/products" variant="ghost" size="lg">Explore Systems</Button>
+      </div>
+    </div>
+
+    <div class="lg:col-span-6">
+      <div class="overflow-hidden rounded-lg border border-white/10 bg-navy-900/80 shadow-2xl shadow-black/40">
+        <div class="flex items-center justify-between border-b border-white/10 px-4 py-2.5 font-mono text-[11px] uppercase tracking-widest text-slate-400">
+          <span>Puzzle System · Module A</span>
+          <span class="flex items-center gap-2 text-signal-400">
+            <span class="h-2 w-2 rounded-full bg-signal-400 animate-blink"></span>
+            Retrieving · Bay 05
+          </span>
+        </div>
+        <ParkingVisual variant="puzzle" animate class="block w-full p-4 sm:p-6" />
+        <div class="grid grid-cols-3 divide-x divide-white/10 border-t border-white/10 font-mono text-[11px] uppercase tracking-widest">
+          <div class="px-4 py-3"><span class="block text-slate-500">Levels</span><span class="text-white">03</span></div>
+          <div class="px-4 py-3"><span class="block text-slate-500">Capacity</span><span class="text-white">08 / 09</span></div>
+          <div class="px-4 py-3"><span class="block text-slate-500">Control</span><span class="text-signal-400">PLC</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="relative border-t border-white/10 bg-black/30">
+    <dl class="container-px mx-auto grid max-w-7xl grid-cols-2 sm:grid-cols-4">
+      {STATS.map((stat, i) => (
+        <div class:list={['py-7 sm:py-9', i > 0 && 'sm:border-l sm:border-white/10 sm:pl-8', i % 2 === 1 && 'border-l border-white/10 pl-6 sm:pl-8']}>
+          <dt class="font-mono text-[11px] uppercase tracking-widest text-slate-400">{stat.label}</dt>
+          <dd class="led mt-2 text-3xl font-bold sm:text-4xl">{stat.value}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+  <div class="hazard h-2"></div>
+</section>

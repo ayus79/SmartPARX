@@ -1,0 +1,27 @@
+---
+import Button from './Button.astro';
+import { SITE } from '../lib/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Ready to add parking capacity without adding a footprint?',
+  description = 'Talk to our engineering team for a free site assessment and quotation - no obligation.',
+} = Astro.props;
+---
+
+<section class="section-py bg-signal-500">
+  <div class="container-px mx-auto flex max-w-5xl flex-col items-center gap-6 text-center">
+    <h2 class="text-balance font-display text-3xl font-bold text-navy-950 sm:text-4xl">{title}</h2>
+    <p class="max-w-xl text-base text-navy-900/80">{description}</p>
+    <div class="mt-2 flex flex-wrap justify-center gap-4">
+      <Button href="/contact" variant="secondary" size="lg">Request a Quote</Button>
+      <Button href={`tel:${SITE.phoneLinks[0]}`} variant="ghost" size="lg" class="!border-navy-950/30 !text-navy-950 hover:!bg-navy-950/10">
+        Call {SITE.phone[0]}
+      </Button>
+    </div>
+  </div>
+</section>

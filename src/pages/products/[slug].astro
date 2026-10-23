@@ -1,0 +1,145 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { getCollection, render } from 'astro:content';
+import { SITE } from '../../lib/site';
+
+export async function getStaticPaths() {
+  const products = await getCollection('products');
+  return products.map((product) => ({
+    params: { slug: product.id },
+    props: { product, allProducts: products },
+  }));
+}
+
+const { product, allProducts } = Astro.props;
+const { data } = product;
+const { Content } = await render(product);
+
+const specs = [
+  { label: 'Capacity', value: data.capacity },
+  { label: 'Levels', value: data.levels },
+  { label: 'Lift Speed', value: data.liftSpeed },
+  { label: 'Power Supply', value: data.powerSupply },
+];
+
+const related = allProducts
+  .filter((p) => p.id !== product.id)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+
+const productSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: data.title,
+  description: data.summary,
+  brand: {
+    '@type': 'Brand',
+    name: SITE.name,
+  },
+  manufacturer: {
+    '@type': 'Organization',
+    name: SITE.fullName,
+  },
+  category: 'Automated Parking System',
+  additionalProperty: [
+    { '@type': 'PropertyValue', name: 'Capacity', value: data.capacity },
+    { '@type': 'PropertyValue', name: 'Levels', value: data.levels },
+    { '@type': 'PropertyValue', name: 'Lift Speed', value: data.liftSpeed },
+    { '@type': 'PropertyValue', name: 'Power Supply', value: data.powerSupply },
+  ],
+};
+---
+
+<Layout title={data.title} description={data.summary} type="product">
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(productSchema)} />
+  <Breadcrumbs items={[{ label: 'Products', href: '/products' }, { label: data.shortName, href: `/products/${product.id}` }]} />
+  <section class="bg-navy-950 text-white section-py">
+    <div class="container-px mx-auto max-w-7xl">
+      <h1 class="max-w-3xl text-balance font-display text-4xl font-bold sm:text-5xl">{data.title}</h1>
+      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-300">{data.summary}</p>
+    </div>
+  </section>
+
+  <section class="section-py bg-white">
+    <div class="container-px mx-auto grid max-w-7xl gap-12 lg:grid-cols-3">
+      <div class="lg:col-span-2">
+        <div class="prose-content font-sans text-navy-700 leading-relaxed">
+          <Content />
+        </div>
+
+        <div class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2">
+          <div>
+            <h2 class="font-display text-xl font-semibold text-navy-900">Key Features</h2>
+            <ul class="mt-4 space-y-3">
+              {data.features.map((feature) => (
+                <li class="flex gap-3 text-sm leading-relaxed text-navy-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="mt-0.5 h-5 w-5 shrink-0 text-signal-500" aria-hidden="true">
+                    <path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h2 class="font-display text-xl font-semibold text-navy-900">Safety Features</h2>
+            <ul class="mt-4 space-y-3">
+              {data.safetyFeatures.map((feature) => (
+                <li class="flex gap-3 text-sm leading-relaxed text-navy-600">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="mt-0.5 h-5 w-5 shrink-0 text-navy-900" aria-hidden="true">
+                    <path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                  </svg>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-12">
+          <h2 class="font-display text-xl font-semibold text-navy-900">Typical Applications</h2>
+          <div class="mt-4 flex flex-wrap gap-2">
+            {data.applications.map((app) => (
+              <span class="rounded-full bg-slate-100 px-3.5 py-1.5 text-sm font-medium text-navy-700">{app}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <aside class="lg:col-span-1">
+        <div class="sticky top-24 rounded-2xl border border-slate-100 bg-slate-50 p-7 shadow-card">
+          <h2 class="font-display text-lg font-semibold text-navy-900">Specifications</h2>
+          <dl class="mt-5 divide-y divide-slate-200">
+            {specs.map((spec) => (
+              <div class="flex items-center justify-between py-3 text-sm">
+                <dt class="text-navy-500">{spec.label}</dt>
+                <dd class="font-semibold text-navy-900 text-right">{spec.value}</dd>
+              </div>
+            ))}
+          </dl>
+          <a
+            href="/contact"
+            class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-signal-500 px-5 py-3 text-sm font-semibold text-navy-950 transition-colors hover:bg-signal-400"
+          >
+            Request a Quote
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section-py bg-slate-50">
+    <div class="container-px mx-auto max-w-7xl">
+      <h2 class="font-display text-2xl font-bold text-navy-900">Related Systems</h2>
+      <div class="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {related.map((p) => <ProductCard product={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <CtaBanner />
+</Layout>
