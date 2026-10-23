@@ -5,10 +5,10 @@ import Layout from '../layouts/Layout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import CtaBanner from '../components/CtaBanner.astro';
 
-const files = import.meta.glob<{ default: ImageMetadata }>('../assets/images/{projects,products,factory}/*.jpg', { eager: true });
+const files = import.meta.glob<{ default: ImageMetadata }>('../assets/images/{projects,products}/*.jpg', { eager: true });
 const img = (path: string) => files[`../assets/images/${path}`].default;
 
-type Category = 'Two-post stackers' | 'Three-level' | 'Puzzle & pit' | 'Heavy duty' | 'Custom' | 'Client sites' | 'Factory';
+type Category = 'Two-post stackers' | 'Three-level' | 'Puzzle & pit' | 'Heavy duty' | 'Custom' | 'Client sites';
 
 const items: { src: ImageMetadata; category: Category; caption: string }[] = [
   { src: img('projects/two-level-1.jpg'), category: 'Two-post stackers', caption: 'Row of two-post parking stackers' },
@@ -28,8 +28,6 @@ const items: { src: ImageMetadata; category: Category; caption: string }[] = [
   { src: img('projects/puzzle-multilevel-1.jpg'), category: 'Puzzle & pit', caption: 'Multi-level puzzle module' },
   { src: img('projects/two-level-6.jpg'), category: 'Two-post stackers', caption: 'Two-post stacker with yellow platform' },
   { src: img('projects/triple-1.jpg'), category: 'Three-level', caption: 'TPP+ three-level stacker' },
-  { src: img('factory/unit-1.jpg'), category: 'Factory', caption: 'Manufacturing Unit 1, Vatva GIDC' },
-  { src: img('factory/unit-2.jpg'), category: 'Factory', caption: 'Manufacturing Unit 2' },
 ];
 
 const categories = ['All', ...new Set(items.map((i) => i.category))];
@@ -38,12 +36,12 @@ const full = await Promise.all(items.map((i) => getImage({ src: i.src, width: 18
 
 <Layout
   title="Projects - Car Parking System Installations"
-  description="Photos of SmartPARX car parking installations: two-post stacker rows, three-level TPP+ stackers, puzzle and pit systems, four-pole suspended parking and our Ahmedabad factory."
+  description="Photos of SmartPARX car parking installations: two-post stacker rows, three-level TPP+ stackers, puzzle and pit systems, and four-pole suspended parking."
 >
   <PageHeader
     kicker="Projects"
     title="2500+ systems installed. <span class='text-ink-400'>Here are a few.</span>"
-    intro="Residential towers, commercial complexes, hospitals and showrooms - photographed on site and at our factory."
+    intro="Residential towers, commercial complexes, hospitals and showrooms - photographed on site."
     crumbs={[{ label: 'Projects', href: '/projects' }]}
   >
     <div class="mt-12 flex flex-wrap gap-2" role="group" aria-label="Filter projects">
