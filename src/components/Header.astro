@@ -7,7 +7,7 @@ const currentPath = Astro.url.pathname;
 const isActive = (href: string) => currentPath === href || currentPath.startsWith(`${href}/`);
 ---
 
-<header id="site-header" class="sticky top-0 z-50 border-b border-transparent bg-paper/80 backdrop-blur-xl transition-[border-color,background-color] duration-300 data-[scrolled]:border-paper-300 data-[scrolled]:bg-paper/95">
+<header id="site-header" class="sticky top-0 z-50 border-b border-transparent bg-paper/80 backdrop-blur-xl transition-[border-color,background-color] duration-300 data-[scrolled]:border-paper-300 data-[scrolled]:bg-paper/95 data-[menu-open]:border-paper-300 data-[menu-open]:bg-paper">
   <div class="container-px mx-auto flex h-[4.5rem] max-w-[90rem] items-center justify-between gap-6">
     <Logo />
 
@@ -46,7 +46,10 @@ const isActive = (href: string) => currentPath === href || currentPath.startsWit
     </button>
   </div>
 
-  <div id="mobile-menu" class="fixed inset-x-0 top-[4.5rem] bottom-0 hidden flex-col bg-paper lg:hidden" data-open="false">
+</header>
+
+<!-- Kept outside <header>: its backdrop-filter would otherwise trap this fixed overlay inside the header box. -->
+<div id="mobile-menu" class="fixed inset-x-0 top-[4.5rem] bottom-0 z-[45] hidden flex-col overflow-y-auto bg-paper lg:hidden">
     <nav class="container-px flex flex-1 flex-col justify-center gap-1" aria-label="Mobile">
       {[...NAV_LINKS, { label: 'Contact', href: '/contact' }].map((link, i) => (
         <a href={link.href} class="flex items-baseline gap-4 border-b border-paper-300 py-4 font-display text-3xl font-semibold tracking-tight text-ink-900">
@@ -60,7 +63,7 @@ const isActive = (href: string) => currentPath === href || currentPath.startsWit
       <a href={`mailto:${SITE.email}`} class="text-ink-600">{SITE.email}</a>
     </div>
   </div>
-</header>
+
 
 <script>
   const header = document.getElementById('site-header');
@@ -72,9 +75,10 @@ const isActive = (href: string) => currentPath === href || currentPath.startsWit
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  toggle?.addEventListener('click', () => {
-    const open = toggle.getAttribute('aria-expanded') !== 'true';
+  const setOpen = (open: boolean) => {
+    if (!toggle) return;
     toggle.setAttribute('aria-expanded', String(open));
+    header?.toggleAttribute('data-menu-open', open);
     toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     menu?.classList.toggle('hidden', !open);
     menu?.classList.toggle('flex', open);
@@ -83,5 +87,9 @@ const isActive = (href: string) => currentPath === href || currentPath.startsWit
       bars[0].style.transform = open ? 'rotate(45deg)' : '';
       bars[1].style.transform = open ? 'rotate(-45deg)' : '';
     }
-  });
+  };
+
+  toggle?.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => e.key === 'Escape' && setOpen(false));
+  window.matchMedia('(min-width: 1024px)').addEventListener('change', (e) => e.matches && setOpen(false));
 </script>

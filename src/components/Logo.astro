@@ -10,11 +10,11 @@ const { tone = 'dark', tagline = true } = Astro.props;
 ---
 
 <a href="/" class="inline-flex flex-col leading-none" aria-label="SmartPARX - home">
-  <span class:list={['font-display text-[1.45rem] font-bold tracking-[-0.04em]', tone === 'dark' ? 'text-ink-900' : 'text-white']}>
+  <span class:list={['font-display text-[1.75rem] font-bold tracking-[-0.04em] lg:text-[2rem]', tone === 'dark' ? 'text-ink-900' : 'text-white']}>
     Smart<span class="text-signal-500">PARX</span>
   </span>
   {tagline && (
-    <span class:list={['mt-1 text-[0.62rem] font-medium italic tracking-wide', tone === 'dark' ? 'text-ink-500' : 'text-ink-300']}>
+    <span class:list={['mt-1.5 text-[0.7rem] font-medium italic tracking-wide lg:text-xs', tone === 'dark' ? 'text-ink-500' : 'text-ink-300']}>
       Do it the smart way
     </span>
   )}
