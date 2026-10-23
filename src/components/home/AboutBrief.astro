@@ -1,32 +1,38 @@
 ---
 import Button from '../Button.astro';
+import Icon from '../Icon.astro';
+import { Eye, Target, Factory, MapPin } from 'lucide-static';
 
 const values = [
   {
     title: 'Vision',
+    icon: Eye,
     description: 'Building strong, lasting customer relationships through engineering trust.',
   },
   {
     title: 'Mission',
+    icon: Target,
     description: 'Meeting India’s growing parking demand with innovative, space-efficient solutions.',
   },
   {
     title: 'Facility',
+    icon: Factory,
     description: '10,000+ sq. ft. state-of-the-art manufacturing facility in Ahmedabad.',
   },
   {
     title: 'Sectors Served',
+    icon: MapPin,
     description: 'Hotels, malls, apartments, commercial and smart buildings nationwide.',
   },
 ];
 ---
 
-<section class="section-py bg-white">
+<section class="section-py blueprint">
   <div class="container-px mx-auto max-w-7xl">
     <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
       <div>
-        <span class="text-sm font-semibold uppercase tracking-wide text-signal-600">About SmartPARX</span>
-        <h2 class="mt-3 text-balance font-display text-3xl font-bold text-navy-900 sm:text-4xl">
+        <span class="eyebrow">About SmartPARX</span>
+        <h2 class="mt-4 text-balance font-display text-3xl font-bold text-navy-900 sm:text-4xl">
           35+ years of engineering experience behind every installation
         </h2>
         <p class="mt-5 text-base leading-relaxed text-navy-600">
@@ -39,8 +45,11 @@ const values = [
 
       <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
         {values.map((value) => (
-          <div class="rounded-2xl border border-slate-100 bg-slate-50 p-6 shadow-card transition-shadow hover:shadow-card-hover">
-            <h3 class="font-display text-lg font-semibold text-navy-900">{value.title}</h3>
+          <div class="group rounded-lg border border-slate-200 border-t-4 border-t-navy-900 bg-white p-6 transition-colors hover:border-t-signal-500">
+            <span class="flex h-11 w-11 items-center justify-center rounded-md bg-slate-100 text-signal-600 transition-colors group-hover:bg-signal-500 group-hover:text-navy-950">
+              <Icon svg={value.icon} class="h-5 w-5" />
+            </span>
+            <h3 class="mt-4 font-display text-lg font-semibold text-navy-900">{value.title}</h3>
             <p class="mt-2 text-sm leading-relaxed text-navy-600">{value.description}</p>
           </div>
         ))}
