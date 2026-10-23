@@ -34,7 +34,7 @@ export const SITE = {
   // Add real profile URLs here once created; empty entries are not rendered or added to schema.
   social: {
     facebook: '',
-    instagram: '',
+    instagram: 'https://www.instagram.com/smartparx',
     linkedin: '',
     youtube: '',
   },
