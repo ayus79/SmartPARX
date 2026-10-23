@@ -5,6 +5,8 @@ family: heavy-duty
 order: 5
 model: 2L3PS+
 summary: A heavy-duty two-level system on ISMB front columns with a third support - built for wide platforms up to 2.7 m and shared pillars between bays.
+seoTitle: "Three Pole Heavy Duty Parking System 2L3PS+"
+seoDescription: "2L3PS+ heavy-duty two-level parking: 2500 kg on ISMB front columns, platforms 2200 to 2700 mm wide and shared pillars between bays. Get specs and a quote."
 capacity: 2500 kg
 capacityKg: 2500
 platformSizes: 2200 – 2700 mm

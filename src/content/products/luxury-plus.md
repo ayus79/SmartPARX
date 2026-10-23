@@ -6,6 +6,8 @@ order: 4
 model: DPL+
 variants: [DPL+]
 summary: One of the most robust stackers on the market - dual single-stroke cylinders and dual lifting chains on a 3.2 m base, load-tested to 3 tonnes for luxury cars and SUVs.
+seoTitle: "Luxury+ Car Parking Stacker for SUVs (2700 kg)"
+seoDescription: "Luxury+ stacker for luxury cars and SUVs: 2700 kg, dual cylinders and dual chains on a 3.2 m base, 3-tonne load tested. Reverse parking up to 2350 kg."
 capacity: 2700 kg
 capacityKg: 2700
 platformSizes: 2200, 2300, 2400 mm

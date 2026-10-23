@@ -6,6 +6,8 @@ order: 3
 model: DPP+
 variants: [DPP+]
 summary: 2:1 hydraulic-chain technology on a 2.5 m robotic-welded base - smoother, quicker operation with no upper supports or slab punctures needed.
+seoTitle: "Premium+ Hydraulic Car Parking Lift (2500 kg)"
+seoDescription: "Premium+ two-post car parking lift: 2500 kg, single-stroke cylinder and a 2.5 m self-supporting base, so no slab punctures. Reverse parking up to 2000 kg."
 capacity: 2500 kg
 capacityKg: 2500
 platformSizes: 2100, 2200, 2300, 2400 mm

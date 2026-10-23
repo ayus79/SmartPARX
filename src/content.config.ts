@@ -11,6 +11,9 @@ const products = defineCollection({
       family: z.enum(['two-post', 'heavy-duty', 'multi-level', 'specialised']),
       order: z.number(),
       summary: z.string(),
+      // Search-result copy. Title gets ' | SmartPARX' appended (keep ≤ 48 chars); description 140–160 chars.
+      seoTitle: z.string().max(48),
+      seoDescription: z.string().min(120).max(160),
       model: z.string().optional(),
       variants: z.array(z.string()).default([]),
       // Spec sheet - every value comes from the brochure; omit what it doesn't state.

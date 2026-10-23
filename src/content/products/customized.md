@@ -4,6 +4,8 @@ shortName: Customized
 family: specialised
 order: 11
 summary: Lift heights from 1.8 m to 10 m and systems built around your structure - walls, D-walls, retaining walls - before or after BU/OC permission.
+seoTitle: "Customized Car Parking Systems (1.8 to 10 m)"
+seoDescription: "Custom car parking systems designed around your building: lift heights from 1.8 m to 10 m, built around walls and D-walls, before or after BU/OC permission."
 capacity: Engineered to site
 features:
   - Parking lifts from 1.8 m to 10 m in height

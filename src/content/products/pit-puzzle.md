@@ -4,6 +4,8 @@ shortName: Pit / Pit-Puzzle
 family: multi-level
 order: 8
 summary: Platforms that drop into a pit below grade, so you add levels without adding height - for front and reverse parking.
+seoTitle: "Pit Parking System - Pit Stacker & Pit Puzzle"
+seoDescription: "Pit stacker and pit-puzzle parking: platforms sink below grade to add levels where height is limited. 2000/2500 kg, with front and reverse parking. Get a quote."
 capacity: 2000 / 2500 kg
 capacityKg: 2500
 platformSizes: 2100 – 2700 mm

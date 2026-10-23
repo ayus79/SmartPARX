@@ -60,7 +60,7 @@ const productSchema = {
 };
 ---
 
-<Layout title={data.title} description={data.summary} image={ogImage} type="product">
+<Layout title={data.seoTitle} description={data.seoDescription} image={ogImage} type="product">
   <script is:inline type="application/ld+json" set:html={JSON.stringify(productSchema)} />
 
   <section class="container-px mx-auto max-w-[90rem] pt-8 sm:pt-12">

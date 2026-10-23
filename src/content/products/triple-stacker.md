@@ -5,6 +5,8 @@ family: multi-level
 order: 6.5
 model: TPP+
 summary: Three cars in the footprint of one - a four-post, three-level stacker for sites with generous clear height.
+seoTitle: "Three Level Car Stacker TPP+ (Triple Parking)"
+seoDescription: "TPP+ three-level car stacker: park three cars in the footprint of one. A four-post frame for high-ceiling basements and stilt floors. Book a site survey."
 capacity: Configured per site
 features:
   - Triples capacity in a single bay

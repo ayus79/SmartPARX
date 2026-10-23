@@ -4,7 +4,7 @@ export const SITE = {
   fullName: 'SmartPARX Parking Solutions LLP',
   tagline: 'Do it the smart way',
   description:
-    'SmartPARX is an ISO 9001:2015 car parking system manufacturer in Ahmedabad. 2500+ two-post stackers, heavy-duty, puzzle, pit and two-wheeler parking systems installed, with in-house hydraulics and a 2 + 5 year warranty.',
+    'ISO 9001:2015 car parking system manufacturer in Ahmedabad. Stack parking, puzzle, pit and two-wheeler systems: 2500+ installed, with a 2 + 5 year warranty.',
   keywords:
     'car parking system manufacturer Ahmedabad, two post parking stacker, stack parking system, hydraulic car parking lift, puzzle parking system, pit parking system, two wheeler parking system, car parking stacker price India, multi level car parking Gujarat',
   url: 'https://www.smartparx.com',

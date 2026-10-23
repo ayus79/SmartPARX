@@ -6,6 +6,8 @@ order: 2
 model: DPP
 variants: [DPP01, DPP02, DPP03]
 summary: A heavier structure and an in-house balanced lifting mechanism, with a larger cylinder and Italian DAS seals - cost-effective, with reverse-parking capability.
+seoTitle: "Premium Two Post Car Parking Stacker (2300 kg)"
+seoDescription: "Premium two-post stack parking: 2300 kg, larger cylinder with Italian DAS seals, leak-proof hydraulics and reverse parking up to 1800 kg. Get a quote."
 capacity: 2300 kg
 capacityKg: 2300
 platformSizes: 2100, 2200, 2300, 2400 mm

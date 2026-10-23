@@ -6,6 +6,8 @@ order: 6
 model: 2×2 / 2×3
 variants: [2×2, 2×3]
 summary: A suspended four-pole frame that lifts two or three platforms side by side - column-free ground bays, so both lower cars drive straight in.
+seoTitle: "Four Pole Suspended Car Parking (2x2 / 2x3)"
+seoDescription: "Four-pole suspended car parking: two or three platforms on an overhead frame, 2200/2700 kg, with no posts between the lower cars. Get specs and a quote."
 capacity: 2200 / 2700 kg
 capacityKg: 2700
 platformSizes: 2100 – 2700 mm

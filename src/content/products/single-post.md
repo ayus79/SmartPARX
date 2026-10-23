@@ -4,6 +4,8 @@ shortName: Single Post
 family: specialised
 order: 9
 summary: A two-level stacker on a single laser-cut column - for bays squeezed between walls, D-walls or retaining walls where two posts won't fit.
+seoTitle: "Single Post Car Parking System (2000 kg)"
+seoDescription: "Single-post two-level car parking for bays beside walls, D-walls or retaining walls. 2000 kg, laser-cut column, single-stroke hydraulics. Before or after BU/OC."
 capacity: 2000 kg
 capacityKg: 2000
 platformSizes: 2100 mm

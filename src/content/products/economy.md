@@ -6,6 +6,8 @@ order: 1
 model: DPE
 variants: [DPE01, DPE02, DPE03, DPE04, DPE05, DPE06]
 summary: The traditional, space-saving two-post stacker for cars up to 2000 kg - built for performance, reliability and safety at a budget-friendly value.
+seoTitle: "Economy Two Post Car Parking Stacker (2000 kg)"
+seoDescription: "Economy two-post car parking stacker: 2000 kg lift, telescopic hydraulic cylinder, mechanical locks and 6 variants. Doubles any parking bay. Get a quote."
 capacity: 2000 kg
 capacityKg: 2000
 platformSizes: 2100, 2200, 2300, 2400 mm
