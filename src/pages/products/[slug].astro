@@ -3,6 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import CtaBanner from '../../components/CtaBanner.astro';
 import ProductCard from '../../components/ProductCard.astro';
+import ParkingVisual from '../../components/ParkingVisual.astro';
+import { systemLabel, visualFor } from '../../lib/visuals';
 import { getCollection, render } from 'astro:content';
 import { SITE } from '../../lib/site';
 
@@ -57,9 +59,15 @@ const productSchema = {
   <script is:inline type="application/ld+json" set:html={JSON.stringify(productSchema)} />
   <Breadcrumbs items={[{ label: 'Products', href: '/products' }, { label: data.shortName, href: `/products/${product.id}` }]} />
   <section class="asphalt text-white section-py">
-    <div class="container-px mx-auto max-w-7xl">
-      <h1 class="max-w-3xl text-balance font-display text-4xl font-bold sm:text-5xl">{data.title}</h1>
-      <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-300">{data.summary}</p>
+    <div class="container-px mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
+      <div>
+        <span class="eyebrow eyebrow-dark">SPX-{String(data.order).padStart(2, '0')} · {systemLabel(data)}</span>
+        <h1 class="mt-5 max-w-3xl text-balance font-display text-4xl font-bold sm:text-5xl">{data.title}</h1>
+        <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-300">{data.summary}</p>
+      </div>
+      <div class="rounded-lg border border-white/10 bg-navy-900/70 p-4 sm:p-6">
+        <ParkingVisual variant={visualFor(data)} class="block w-full" />
+      </div>
     </div>
   </section>
 
@@ -104,29 +112,32 @@ const productSchema = {
           <h2 class="font-display text-xl font-semibold text-navy-900">Typical Applications</h2>
           <div class="mt-4 flex flex-wrap gap-2">
             {data.applications.map((app) => (
-              <span class="rounded-full bg-slate-100 px-3.5 py-1.5 text-sm font-medium text-navy-700">{app}</span>
+              <span class="rounded-md border border-slate-200 bg-slate-50 px-3.5 py-1.5 text-sm font-medium text-navy-700">{app}</span>
             ))}
           </div>
         </div>
       </div>
 
       <aside class="lg:col-span-1">
-        <div class="sticky top-24 rounded-lg border border-slate-200 bg-slate-50 p-7 shadow-card">
-          <h2 class="font-display text-lg font-semibold text-navy-900">Specifications</h2>
-          <dl class="mt-5 divide-y divide-slate-200">
+        <div class="sticky top-24 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-card">
+          <div class="hazard h-2"></div>
+          <div class="p-7">
+          <h2 class="font-mono text-xs font-semibold uppercase tracking-widest text-navy-600">Technical Specifications</h2>
+          <dl class="mt-5 divide-y divide-dashed divide-slate-200 font-mono">
             {specs.map((spec) => (
-              <div class="flex items-center justify-between py-3 text-sm">
-                <dt class="text-navy-500">{spec.label}</dt>
+              <div class="flex items-center justify-between gap-4 py-3 text-xs">
+                <dt class="uppercase tracking-wider text-navy-600">{spec.label}</dt>
                 <dd class="font-semibold text-navy-900 text-right">{spec.value}</dd>
               </div>
             ))}
           </dl>
           <a
             href="/contact"
-            class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-signal-500 px-5 py-3 text-sm font-semibold text-navy-950 transition-colors hover:bg-signal-400"
+            class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-md bg-signal-500 px-5 py-3 text-xs font-bold uppercase tracking-wider text-navy-950 transition-colors hover:bg-signal-400"
           >
             Request a Quote
           </a>
+          </div>
         </div>
       </aside>
     </div>

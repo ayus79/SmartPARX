@@ -38,7 +38,7 @@ import { SITE } from '../lib/site';
           <div class="mt-5 flex flex-col gap-3">
             <a
               href={`tel:${SITE.phoneLinks[0]}`}
-              class="inline-flex items-center justify-center gap-2 rounded-full bg-navy-900 px-5 py-3 text-sm font-semibold text-white hover:bg-navy-800"
+              class="inline-flex items-center justify-center gap-2 rounded-md bg-navy-900 px-5 py-3 text-sm font-semibold text-white hover:bg-navy-800"
             >
               Call {SITE.phone[0]}
             </a>
@@ -46,7 +46,7 @@ import { SITE } from '../lib/site';
               href={`https://wa.me/${SITE.whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center justify-center gap-2 rounded-full border border-navy-900 px-5 py-3 text-sm font-semibold text-navy-900 hover:bg-navy-900 hover:text-white"
+              class="inline-flex items-center justify-center gap-2 rounded-md border border-navy-900 px-5 py-3 text-sm font-semibold text-navy-900 hover:bg-navy-900 hover:text-white"
             >
               Chat on WhatsApp
             </a>
@@ -81,7 +81,7 @@ import { SITE } from '../lib/site';
 
   <section class="bg-slate-50 pb-16 sm:pb-20 lg:pb-28">
     <div class="container-px mx-auto max-w-7xl">
-      <div class="overflow-hidden rounded-2xl border border-slate-200 shadow-card">
+      <div class="overflow-hidden rounded-lg border border-slate-200 shadow-card">
         <iframe
           src={SITE.mapEmbedUrl}
           width="100%"
