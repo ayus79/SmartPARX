@@ -32,6 +32,22 @@ Marketing website for SmartPARX, an automated & mechanical car parking systems m
 | `npm run preview`   | Preview the production build locally        |
 | `npm run check`     | Type-check the project (`astro check`)      |
 
+## Deploying a preview to GitHub Pages
+
+Every push to `main` runs `.github/workflows/deploy-pages.yml`, which builds the site for
+`https://ayus79.github.io/SmartPARX/` and publishes it. One-time setup: in the repo go to
+**Settings → Pages → Build and deployment → Source** and choose **GitHub Actions**.
+
+The preview build sets three environment variables:
+
+| Variable | Pages value | Default (real domain) |
+| --- | --- | --- |
+| `SITE_URL` | `https://ayus79.github.io` | `https://www.smartparx.com` |
+| `BASE_PATH` | `/SmartPARX` | `/` |
+| `PUBLIC_NOINDEX` | `true` (keeps the preview out of search) | unset |
+
+Internal links must go through `withBase()` from `src/lib/url.ts` so they work under both.
+
 ## Deploying to Cloudflare Pages
 
 This is a fully static site - no server runtime required.

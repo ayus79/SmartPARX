@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../../lib/url';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 
@@ -34,7 +35,7 @@ const compact = [byId('single-post'), byId('two-wheeler')];
     <ul class="mt-14 grid auto-rows-[20rem] grid-cols-1 gap-4 sm:grid-cols-2 lg:mt-20 lg:auto-rows-[18rem] lg:grid-cols-4">
       {tiles.map(({ product, span, label }) => (
         <li class:list={['reveal', span]}>
-          <a href={`/products/${product.id}`} class="group relative flex h-full overflow-hidden rounded-[1.75rem] bg-ink-900">
+          <a href={withBase(`/products/${product.id}`)} class="group relative flex h-full overflow-hidden rounded-[1.75rem] bg-ink-900">
             {product.data.image && (
               <Image
                 src={product.data.image}
@@ -67,7 +68,7 @@ const compact = [byId('single-post'), byId('two-wheeler')];
           <ul class="divide-y divide-paper-300">
             {compact.map((p) => (
               <li>
-                <a href={`/products/${p.id}`} class="group flex items-center justify-between gap-4 py-4">
+                <a href={withBase(`/products/${p.id}`)} class="group flex items-center justify-between gap-4 py-4">
                   <span>
                     <span class="block font-display text-xl font-semibold tracking-tight text-ink-900">{p.data.shortName}</span>
                     <span class="mt-0.5 block text-sm text-ink-500">{p.data.capacity} · {p.data.platformSizes}</span>

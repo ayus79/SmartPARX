@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../../lib/url';
 import { getCollection, render } from 'astro:content';
 import { Image, getImage } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
@@ -51,9 +52,9 @@ const productSchema = {
   name: data.title,
   description: data.summary,
   ...(data.model && { model: data.model }),
-  ...(ogImage && { image: new URL(ogImage, SITE.url).toString() }),
+  ...(ogImage && { image: new URL(ogImage, Astro.site).toString() }),
   brand: { '@type': 'Brand', name: SITE.name },
-  manufacturer: { '@id': `${SITE.url}/#organization` },
+  manufacturer: { '@id': new URL(withBase('/#organization'), Astro.site).toString() },
   category: 'Car parking system',
   additionalProperty: specs.map(([name, value]) => ({ '@type': 'PropertyValue', name, value })),
 };
@@ -98,7 +99,7 @@ const productSchema = {
 
       <div class="lg:col-span-5">
         <div class="lg:sticky lg:top-28">
-          <a href={`/products#${data.family}`} class="kicker hover:text-ink-900">{FAMILIES[data.family].label}</a>
+          <a href={withBase(`/products#${data.family}`)} class="kicker hover:text-ink-900">{FAMILIES[data.family].label}</a>
           <h1 class="display mt-5 text-display-1 text-ink-900">{data.title.replace('Two Post Parking Stacker - ', '')}</h1>
           {data.family === 'two-post' && <p class="mt-2 font-display text-lg text-ink-500">Two-post parking stacker</p>}
           <p class="mt-6 text-lg leading-relaxed text-pretty text-ink-600">{data.summary}</p>
@@ -171,7 +172,7 @@ const productSchema = {
           </ol>
         )}
         {data.family === 'two-post' && (
-          <a href="/planning-guide" class="group mt-10 flex items-center justify-between gap-6 rounded-2xl bg-ink-950 p-6 text-white">
+          <a href={withBase('/planning-guide')} class="group mt-10 flex items-center justify-between gap-6 rounded-2xl bg-ink-950 p-6 text-white">
             <span>
               <span class="block font-display text-lg font-semibold">Check your clear height and bay width</span>
               <span class="mt-1 block text-sm text-ink-300">Sedan + Sedan needs 3400 mm · SUV + SUV needs 4300 mm</span>

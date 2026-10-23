@@ -2,13 +2,14 @@
 // Interactive stacker sizing tool built on the brochure's "Parking Stacker Guidelines".
 import { HEIGHT_GUIDE, WIDTH_GUIDE } from '../lib/site';
 import Button from './Button.astro';
+import { withBase } from '../lib/url';
 
 interface Props {
   heading?: boolean;
 }
 
 const { heading = true } = Astro.props;
-const data = JSON.stringify({ heights: HEIGHT_GUIDE, widths: WIDTH_GUIDE });
+const data = JSON.stringify({ heights: HEIGHT_GUIDE, widths: WIDTH_GUIDE, pitHref: withBase('/products/pit-puzzle') });
 const fmt = (n: number) => n.toLocaleString('en-IN');
 const d = { h: HEIGHT_GUIDE[0], w: WIDTH_GUIDE[1] };
 ---
@@ -147,6 +148,7 @@ const d = { h: HEIGHT_GUIDE[0], w: WIDTH_GUIDE[1] };
   type Guide = {
     heights: { combo: string; total: number; lower: number }[];
     widths: { platform: number; bays: number[] }[];
+    pitHref: string;
   };
 
   document.querySelectorAll<HTMLElement>('[data-planner]').forEach((root) => {
@@ -182,7 +184,7 @@ const d = { h: HEIGHT_GUIDE[0], w: WIDTH_GUIDE[1] };
         v.innerHTML = `<p class="font-semibold text-signal-400">✓ A ${h.combo} stacker fits - ${fmt(diff)} mm to spare.</p><p class="mt-1 text-sm text-ink-300">Check that services below the slab don’t eat into that margin.</p>`;
       } else {
         v.className = 'mt-8 rounded-2xl border border-amber-400/40 bg-amber-400/10 p-5';
-        v.innerHTML = `<p class="font-semibold text-amber-400">${fmt(-diff)} mm short for ${h.combo}.</p><p class="mt-1 text-sm text-ink-300">Try a lower combination, or consider a <a class="underline underline-offset-2 hover:text-white" href="/products/pit-puzzle">pit system</a> that goes down instead of up.</p>`;
+        v.innerHTML = `<p class="font-semibold text-amber-400">${fmt(-diff)} mm short for ${h.combo}.</p><p class="mt-1 text-sm text-ink-300">Try a lower combination, or consider a <a class="underline underline-offset-2 hover:text-white" href="${guide.pitHref}">pit system</a> that goes down instead of up.</p>`;
       }
     };
 

@@ -1,5 +1,5 @@
 ---
-import { SITE } from '../lib/site';
+import { withBase } from '../lib/url';
 
 interface Crumb {
   label: string;
@@ -20,7 +20,7 @@ const schema = {
     '@type': 'ListItem',
     position: index + 1,
     name: crumb.label,
-    item: new URL(crumb.href, SITE.url).toString(),
+    item: new URL(withBase(crumb.href), Astro.site).toString(),
   })),
 };
 ---
@@ -33,7 +33,7 @@ const schema = {
         {index === trail.length - 1 ? (
           <span class="text-ink-900" aria-current="page">{crumb.label}</span>
         ) : (
-          <a href={crumb.href} class="transition-colors hover:text-ink-900">{crumb.label}</a>
+          <a href={withBase(crumb.href)} class="transition-colors hover:text-ink-900">{crumb.label}</a>
         )}
       </li>
     ))}

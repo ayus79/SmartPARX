@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/url';
 import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 import ParkingVisual from './ParkingVisual.astro';
@@ -12,7 +13,7 @@ const { id, data } = product;
 const cover = data.imageFit === 'cover';
 ---
 
-<a href={`/products/${id}`} class="group flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-paper-300 bg-white transition-colors hover:border-ink-900">
+<a href={withBase(`/products/${id}`)} class="group flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-paper-300 bg-white transition-colors hover:border-ink-900">
   <div class:list={['relative aspect-[4/3] overflow-hidden', data.image ? (cover ? 'bg-ink-900' : 'bg-[#e9e9e7]') : 'bg-ink-950']}>
     {data.image ? (
       <Image

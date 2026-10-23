@@ -1,9 +1,10 @@
 ---
+import { withBase, stripBase } from '../lib/url';
 import { NAV_LINKS, SITE } from '../lib/site';
 import Button from './Button.astro';
 import Logo from './Logo.astro';
 
-const currentPath = Astro.url.pathname;
+const currentPath = stripBase(Astro.url.pathname);
 const isActive = (href: string) => currentPath === href || currentPath.startsWith(`${href}/`);
 ---
 
@@ -14,7 +15,7 @@ const isActive = (href: string) => currentPath === href || currentPath.startsWit
     <nav class="hidden items-center gap-0.5 lg:flex xl:gap-1" aria-label="Primary">
       {NAV_LINKS.map((link) => (
         <a
-          href={link.href}
+          href={withBase(link.href)}
           aria-current={isActive(link.href) ? 'page' : undefined}
           class:list={[
             'whitespace-nowrap rounded-full px-3 py-2 text-sm font-medium transition-colors xl:px-4',
@@ -52,7 +53,7 @@ const isActive = (href: string) => currentPath === href || currentPath.startsWit
 <div id="mobile-menu" class="fixed inset-x-0 top-[4.5rem] bottom-0 z-[45] hidden flex-col overflow-y-auto bg-paper lg:hidden">
     <nav class="container-px flex flex-1 flex-col justify-center gap-1" aria-label="Mobile">
       {NAV_LINKS.map((link, i) => (
-        <a href={link.href} class="flex items-baseline gap-4 border-b border-paper-300 py-4 display text-display-3 text-ink-900">
+        <a href={withBase(link.href)} class="flex items-baseline gap-4 border-b border-paper-300 py-4 display text-display-3 text-ink-900">
           <span class="font-mono text-xs text-ink-500">0{i + 1}</span>
           {link.label}
         </a>

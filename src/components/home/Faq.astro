@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../../lib/url';
 interface Props {
   title?: string;
 }
@@ -55,7 +56,7 @@ const schema = {
       <p class="kicker">FAQ</p>
       <h2 id="faq-title" class="display mt-6 text-display-2 text-ink-900">{title}</h2>
       <p class="mt-5 text-ink-600">
-        Still unsure? <a href="/planning-guide" class="font-semibold text-ink-900 underline decoration-signal-500 decoration-2 underline-offset-4">Read the planning guide</a>.
+        Still unsure? <a href={withBase('/planning-guide')} class="font-semibold text-ink-900 underline decoration-signal-500 decoration-2 underline-offset-4">Read the planning guide</a>.
       </p>
     </div>
     <div class="divide-y divide-paper-300 border-y border-paper-300 lg:col-span-8">

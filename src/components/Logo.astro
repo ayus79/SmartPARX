@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/url';
 // Typographic version of the SmartPARX wordmark ("Smart" + green "PARX", tagline below).
 // Replace with the client's vector logo when supplied.
 interface Props {
@@ -9,7 +10,7 @@ interface Props {
 const { tone = 'dark', tagline = true } = Astro.props;
 ---
 
-<a href="/" class="inline-flex flex-col leading-none" aria-label="SmartPARX - home">
+<a href={withBase('/')} class="inline-flex flex-col leading-none" aria-label="SmartPARX - home">
   <span class:list={['font-display text-[1.75rem] font-bold tracking-[-0.04em] lg:text-[2rem]', tone === 'dark' ? 'text-ink-900' : 'text-white']}>
     Smart<span class="text-signal-500">PARX</span>
   </span>

@@ -1,5 +1,6 @@
 ---
 import { SITE } from '../lib/site';
+import { withBase } from '../lib/url';
 
 interface Props {
   title: string;
@@ -20,20 +21,23 @@ const {
 const pageTitle =
   title === SITE.name ? `${SITE.name} - Car Parking System Manufacturer in Ahmedabad` : `${title} | ${SITE.name}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const ogImageURL = new URL(image, Astro.site);
+const abs = (path: string) => new URL(withBase(path), Astro.site).toString();
+const ogImageURL = abs(image);
+// Preview deployments (e.g. GitHub Pages) set PUBLIC_NOINDEX so they don't compete with the real domain in search.
+const noindexSite = import.meta.env.PUBLIC_NOINDEX === 'true';
 const sameAs = Object.values(SITE.social).filter(Boolean);
 
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': ['Organization', 'LocalBusiness'],
-  '@id': `${SITE.url}/#organization`,
+  '@id': abs('/#organization'),
   name: SITE.fullName,
   alternateName: SITE.name,
   slogan: SITE.tagline,
   description: SITE.description,
-  url: SITE.url,
-  logo: new URL('/favicon.svg', SITE.url).toString(),
-  image: new URL(SITE.ogImage, SITE.url).toString(),
+  url: abs('/'),
+  logo: abs('/favicon.svg'),
+  image: abs(SITE.ogImage),
   telephone: SITE.phone[0],
   email: SITE.email,
   foundingDate: SITE.founded,
@@ -67,7 +71,7 @@ const organizationSchema = {
 <title>{pageTitle}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonicalURL} />
-<meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'} />
+<meta name="robots" content={noindex || noindexSite ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'} />
 
 <meta property="og:type" content={type === 'product' ? 'website' : type} />
 <meta property="og:title" content={pageTitle} />
