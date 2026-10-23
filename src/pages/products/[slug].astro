@@ -56,7 +56,7 @@ const productSchema = {
 <Layout title={data.title} description={data.summary} type="product">
   <script is:inline type="application/ld+json" set:html={JSON.stringify(productSchema)} />
   <Breadcrumbs items={[{ label: 'Products', href: '/products' }, { label: data.shortName, href: `/products/${product.id}` }]} />
-  <section class="bg-navy-950 text-white section-py">
+  <section class="asphalt text-white section-py">
     <div class="container-px mx-auto max-w-7xl">
       <h1 class="max-w-3xl text-balance font-display text-4xl font-bold sm:text-5xl">{data.title}</h1>
       <p class="mt-6 max-w-2xl text-lg leading-relaxed text-slate-300">{data.summary}</p>
@@ -111,7 +111,7 @@ const productSchema = {
       </div>
 
       <aside class="lg:col-span-1">
-        <div class="sticky top-24 rounded-2xl border border-slate-100 bg-slate-50 p-7 shadow-card">
+        <div class="sticky top-24 rounded-lg border border-slate-200 bg-slate-50 p-7 shadow-card">
           <h2 class="font-display text-lg font-semibold text-navy-900">Specifications</h2>
           <dl class="mt-5 divide-y divide-slate-200">
             {specs.map((spec) => (
