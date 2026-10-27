@@ -50,6 +50,8 @@ const organizationSchema = {
     postalCode: '380060',
     addressCountry: 'IN',
   },
+  geo: { '@type': 'GeoCoordinates', ...SITE.office.geo },
+  hasMap: SITE.office.mapsUrl,
   location: {
     '@type': 'Place',
     name: 'SmartPARX Factory',

@@ -46,7 +46,7 @@ const rules = [
             <span class="display mt-6 text-5xl tabular-nums text-ink-900">{fmt(h.total)}<span class="ml-1 text-lg text-ink-400">mm</span></span>
             <span class="mt-2 text-sm text-ink-500">Lower level clear: {fmt(h.lower)} mm</span>
             <div class="mt-6 h-1.5 overflow-hidden rounded-full bg-paper-200">
-              <div class="h-full rounded-full bg-signal-500" style={`width:${Math.round((h.total / 4300) * 100)}%`}></div>
+              <svg class="block h-full w-full text-signal-500" aria-hidden="true"><rect width={`${Math.round((h.total / 4300) * 100)}%`} height="100%" rx="3" fill="currentColor" /></svg>
             </div>
           </li>
         ))}

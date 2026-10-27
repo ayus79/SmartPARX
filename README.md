@@ -72,7 +72,7 @@ npx wrangler pages deploy dist --project-name=smartparx
 
 ## Environment / content notes
 
-- Contact form (`src/components/ContactForm.astro`) posts to [Web3Forms](https://web3forms.com) - replace the placeholder `access_key` with a real one before going live.
+- Contact form (`src/components/ContactForm.astro`) sends enquiries to a free Google Apps Script backend protected by Cloudflare Turnstile. Setup: [`apps-script/README.md`](apps-script/README.md).
 - Site-wide contact details, nav links, and copy live in `src/lib/site.ts`.
 - Products are managed as Markdown files in `src/content/products/` - add a new file there to add a new product page.
 - Gallery and product images are currently placeholder icons; replace with real photography under `public/images/` and update the relevant components.

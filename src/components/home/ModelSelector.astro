@@ -77,8 +77,8 @@ const pct = (kg?: number) => (kg ? Math.round((kg / maxKg) * 100) : 0);
 
             <div class="mt-8 space-y-5">
               {[
-                { label: 'Lifting capacity', value: m.data.capacity, w: pct(m.data.capacityKg), tone: 'bg-signal-500' },
-                { label: 'Reverse parking', value: m.data.reverseParking?.replace(' advisable', ''), w: pct(m.data.reverseKg), tone: 'bg-amber-400' },
+                { label: 'Lifting capacity', value: m.data.capacity, w: pct(m.data.capacityKg), tone: 'text-signal-500' },
+                { label: 'Reverse parking', value: m.data.reverseParking?.replace(' advisable', ''), w: pct(m.data.reverseKg), tone: 'text-amber-400' },
               ].map((bar) => (
                 <div>
                   <div class="flex justify-between text-sm">
@@ -86,7 +86,8 @@ const pct = (kg?: number) => (kg ? Math.round((kg / maxKg) * 100) : 0);
                     <span class="font-semibold tabular-nums">{bar.value}</span>
                   </div>
                   <div class="mt-2 h-1.5 overflow-hidden rounded-full bg-white/10">
-                    <div class:list={['h-full rounded-full', bar.tone]} style={`width:${bar.w}%`}></div>
+                    <!-- SVG width attribute instead of an inline style, which the CSP blocks. -->
+                    <svg class:list={['block h-full w-full', bar.tone]} aria-hidden="true"><rect width={`${bar.w}%`} height="100%" rx="3" fill="currentColor" /></svg>
                   </div>
                 </div>
               ))}

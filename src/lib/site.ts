@@ -15,11 +15,17 @@ export const SITE = {
   phoneLinks: ['+919925036201', '+919712937203'],
   whatsapp: '919925036201',
   email: 'info@smartparx.com',
+  // Where website enquiries are delivered. TESTING: switch to info@smartparx.com before launch
+  // (here, for the mail-app fallback, and in the INQUIRY_TO script property — see apps-script/README.md).
+  inquiryEmail: 'ayushcon2000@gmail.com',
   office: {
     label: 'Head Office',
     line1: '302, Atlantis One',
     line2: 'Sagar Sangeet Cross Roads',
     city: 'Ahmedabad, Gujarat 380060',
+    // Exact pin and Google Business listing (cid), from the client's Google Maps link.
+    geo: { latitude: 23.0766981, longitude: 72.518655 },
+    mapsUrl: 'https://maps.google.com/?cid=13981464577443205072',
   },
   factory: {
     label: 'Factory',
@@ -28,8 +34,9 @@ export const SITE = {
     city: 'Ahmedabad, Gujarat 382445',
   },
   hours: 'Mon – Fri · 10:00 AM – 6:00 PM',
+  // Query by the Google listing name (not raw coordinates) so clicking the pin shows the place card.
   mapEmbedUrl:
-    'https://www.google.com/maps?q=302+Atlantis+One+Sagar+Sangeet+Cross+Roads+Ahmedabad+380060&output=embed',
+    'https://maps.google.com/maps?q=SmartPARX+Parking+Solutions+LLP,+Atlantis+One,+302,+Sangeet+Cross+Road,+Science+City,+Sola,+Ahmedabad,+Gujarat+380060&z=17&output=embed',
   certifications: ['ISO 9001:2015', 'Make in India'],
   // Add real profile URLs here once created; empty entries are not rendered or added to schema.
   social: {

@@ -1,34 +1,59 @@
 ---
+// Static-site enquiry form. The browser posts to a Google Apps Script web app (apps-script/Code.gs),
+// which runs every check on Google's servers and sends two fixed-template emails from Gmail:
+//   1. notification to SmartPARX (apps-script/notification.html)
+//   2. confirmation to the customer, when they give an email (apps-script/autoreply.html)
+// Until PUBLIC_FORM_ENDPOINT / PUBLIC_TURNSTILE_SITE_KEY are set, submitting opens the visitor's mail app
+// with the same details instead, so no enquiry is ever lost.
+//
+// Security: Cloudflare Turnstile (free) proves a human submitted from an allowed hostname, and the backend
+// verifies it with a secret the browser never sees. The recipient is fixed server-side. These browser
+// checks (honeypot, fill time, cooldown, validation) only give fast feedback; the backend repeats them.
 import { getCollection } from 'astro:content';
+import { SITE } from '../lib/site';
 
 const products = (await getCollection('products')).sort((a, b) => a.data.order - b.data.order);
 const systemTypes = [...products.map((p) => p.data.shortName), 'Not sure yet - need advice'];
 const field =
-  'mt-2 w-full rounded-xl border border-paper-300 bg-paper px-4 py-3 text-[0.95rem] text-ink-900 transition-colors placeholder:text-ink-400 focus:border-ink-900 focus:bg-white focus:outline-none';
+  'mt-2 w-full rounded-xl border border-paper-300 bg-paper px-4 py-3 text-[0.95rem] text-ink-900 transition-colors placeholder:text-ink-400 focus:border-ink-900 focus:bg-white focus:outline-none aria-[invalid=true]:border-alert-600';
 const label = 'font-mono text-[11px] uppercase tracking-wider text-ink-500';
+
+const config = {
+  endpoint: import.meta.env.PUBLIC_FORM_ENDPOINT ?? '',
+  turnstileSiteKey: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '',
+};
 ---
 
-<form class="grid grid-cols-1 gap-6 sm:grid-cols-2" action="https://api.web3forms.com/submit" method="POST" id="contact-form">
-  <!-- TODO: replace with the client's Web3Forms access key before launch. -->
-  <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
-  <input type="hidden" name="subject" value="New inquiry from smartparx.com" />
-  <input type="checkbox" name="botcheck" class="hidden" style="display: none;" />
+<form
+  id="contact-form"
+  class="grid grid-cols-1 gap-6 sm:grid-cols-2"
+  novalidate
+  data-config={JSON.stringify(config)}
+  data-to={SITE.inquiryEmail}
+  data-company={SITE.fullName}
+  data-phone={SITE.phone[0]}
+  data-phone-link={SITE.phoneLinks[0]}
+>
+  <!-- Honeypot: humans never see or fill this. -->
+  <div class="hidden" aria-hidden="true">
+    <label>Leave empty <input type="text" name="company_website" tabindex="-1" autocomplete="off" /></label>
+  </div>
 
   <div>
-    <label for="name" class={label}>Full name</label>
-    <input type="text" id="name" name="name" autocomplete="name" required class={field} />
+    <label for="name" class={label}>Full name *</label>
+    <input type="text" id="name" name="name" autocomplete="name" required maxlength="80" class={field} />
   </div>
   <div>
-    <label for="phone" class={label}>Phone</label>
-    <input type="tel" id="phone" name="phone" autocomplete="tel" required class={field} />
+    <label for="phone" class={label}>Phone *</label>
+    <input type="tel" id="phone" name="phone" autocomplete="tel" required inputmode="tel" pattern="[+0-9 ()-]{10,16}" placeholder="+91 98765 43210" class={field} />
   </div>
   <div>
     <label for="email" class={label}>Email</label>
-    <input type="email" id="email" name="email" autocomplete="email" class={field} />
+    <input type="email" id="email" name="email" autocomplete="email" maxlength="120" placeholder="For a copy of your enquiry" class={field} />
   </div>
   <div>
     <label for="city" class={label}>Project city</label>
-    <input type="text" id="city" name="city" autocomplete="address-level2" class={field} />
+    <input type="text" id="city" name="city" autocomplete="address-level2" maxlength="60" class={field} />
   </div>
   <div>
     <label for="system" class={label}>System</label>
@@ -38,22 +63,253 @@ const label = 'font-mono text-[11px] uppercase tracking-wider text-ink-500';
   </div>
   <div>
     <label for="spaces" class={label}>Car spaces needed</label>
-    <input type="number" id="spaces" name="spaces" min="1" inputmode="numeric" placeholder="e.g. 40" class={field} />
+    <input type="number" id="spaces" name="spaces" min="1" max="5000" inputmode="numeric" placeholder="e.g. 40" class={field} />
   </div>
   <div class="sm:col-span-2">
     <label for="message" class={label}>Site details</label>
-    <textarea id="message" name="message" rows="4" placeholder="Clear height, basement or stilt, number of floors…" class={field}></textarea>
+    <textarea id="message" name="message" rows="4" maxlength="2000" placeholder="Clear height, basement or stilt, number of floors…" class={field}></textarea>
   </div>
+
+  {config.turnstileSiteKey && <div class="sm:col-span-2" data-turnstile data-sitekey={config.turnstileSiteKey}></div>}
+
   <div class="flex flex-col gap-4 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
     <p class="text-xs text-ink-500">We reply within one working day. Your details are only used to respond to this enquiry.</p>
-    <button type="submit" class="inline-flex h-14 shrink-0 items-center justify-center rounded-full bg-ink-900 px-8 font-semibold text-white transition-colors hover:bg-ink-800">
-      Send enquiry
+    <button type="submit" class="inline-flex h-14 shrink-0 items-center justify-center gap-3 rounded-full bg-ink-900 px-8 font-semibold text-white transition-colors hover:bg-ink-800 disabled:cursor-wait disabled:opacity-70">
+      <span data-label>Send enquiry</span>
+      <svg data-spinner class="hidden h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-opacity="0.3" stroke-width="3" /><path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="3" stroke-linecap="round" /></svg>
     </button>
   </div>
+
+  <div data-status role="status" aria-live="polite" class="hidden rounded-2xl p-5 text-sm sm:col-span-2"></div>
 </form>
 
 <script>
-  const system = new URLSearchParams(location.search).get('system');
-  const select = document.querySelector<HTMLSelectElement>('#contact-form #system');
-  if (system && select && [...select.options].some((o) => o.value === system)) select.value = system;
+  type Config = { endpoint: string; turnstileSiteKey: string };
+  type Turnstile = {
+    render: (el: HTMLElement, o: { sitekey: string; theme?: string; action?: string }) => string;
+    getResponse: (id?: string) => string | undefined;
+    reset: (id?: string) => void;
+  };
+
+  const MIN_FILL_MS = 3000; // real people take longer than this to fill the form
+  const COOLDOWN_MS = 60_000; // one enquiry per minute per browser
+  const DAILY_MAX = 5; // and at most five a day
+  const LIMITS = { name: 60, phone: 16, email: 120, city: 60, system: 60, spaces: 5, message: 2000 } as const;
+  const STORE = 'spx-enquiries';
+
+  // Single-line fields: drop control characters (incl. CR/LF, which could inject email headers) and collapse spaces.
+  const oneLine = (v: string, max: number) => v.replace(/[\u0000-\u001f\u007f]+/g, ' ').replace(/\s+/g, ' ').trim().slice(0, max);
+  // Multi-line message: keep newlines, drop other control characters, cap blank lines.
+  const multiLine = (v: string, max: number) =>
+    v.replace(/\r\n?/g, '\n').replace(/[\u0000-\u0009\u000b-\u001f\u007f]+/g, '').replace(/\n{3,}/g, '\n\n').trim().slice(0, max);
+  const hasLink = (v: string) => /(https?:\/\/|www\.|\.(com|net|org|ru|xyz|top|info)\b|<|>)/i.test(v);
+  const NAME_RE = /^[\p{L}][\p{L} .'-]{1,59}$/u;
+  const EMAIL_RE = /^[^\s@<>()[\],;:"]{1,64}@[a-z0-9.-]{1,253}\.[a-z]{2,24}$/i;
+
+  const history = (): number[] => {
+    try {
+      return (JSON.parse(localStorage.getItem(STORE) ?? '[]') as number[]).filter((t) => Date.now() - t < 86_400_000);
+    } catch {
+      return [];
+    }
+  };
+  const remember = () => {
+    try {
+      localStorage.setItem(STORE, JSON.stringify([...history(), Date.now()]));
+    } catch {
+      /* storage blocked: rely on the server-side limits */
+    }
+  };
+
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+
+  if (form) {
+    const cfg: Config = JSON.parse(form.dataset.config!);
+    const configured = Boolean(cfg.endpoint && cfg.turnstileSiteKey);
+    const loadedAt = Date.now();
+    const status = form.querySelector<HTMLElement>('[data-status]')!;
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+
+    // Pre-select the system when arriving from a product page (?system=Premium+).
+    const preset = new URLSearchParams(location.search).get('system');
+    const select = form.querySelector<HTMLSelectElement>('#system')!;
+    if (preset && [...select.options].some((o) => o.value === preset)) select.value = preset;
+
+    // Cloudflare Turnstile: the backend verifies the token and checks it was issued for an allowed hostname.
+    const captchaBox = form.querySelector<HTMLElement>('[data-turnstile]');
+    let captchaId: string | undefined;
+    const captcha = () => (window as unknown as { turnstile?: Turnstile }).turnstile;
+    if (captchaBox && configured) {
+      (window as unknown as Record<string, unknown>).spxTurnstileReady = () => {
+        captchaId = captcha()!.render(captchaBox, { sitekey: captchaBox.dataset.sitekey!, theme: 'light', action: 'enquiry' });
+      };
+      const s = document.createElement('script');
+      s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?onload=spxTurnstileReady&render=explicit';
+      s.async = true;
+      document.head.append(s);
+    }
+
+    const show = (tone: 'ok' | 'error', html: string) => {
+      status.className = `rounded-2xl p-5 text-sm sm:col-span-2 ${tone === 'ok' ? 'bg-signal-50 text-ink-900' : 'bg-red-50 text-alert-600'}`;
+      status.innerHTML = html;
+      status.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    };
+    const busy = (on: boolean) => {
+      button.disabled = on;
+      button.querySelector('[data-spinner]')!.classList.toggle('hidden', !on);
+      button.querySelector('[data-label]')!.textContent = on ? 'Sending…' : 'Send enquiry';
+    };
+    const escape = (s: string) => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+
+    // Short human-readable reference, e.g. SPX-261025-4821, quoted in both emails.
+    const reference = () => {
+      const d = new Date();
+      const ymd = `${String(d.getFullYear()).slice(2)}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}`;
+      return `SPX-${ymd}-${String(Math.floor(1000 + Math.random() * 9000))}`;
+    };
+
+    // Plain-text version of the fixed template, used for the mail-app fallback.
+    const textBody = (p: Record<string, string>) =>
+      [
+        `New enquiry ${p.reference}`,
+        '',
+        `Name: ${p.name}`,
+        `Phone: ${p.phone}`,
+        `Email: ${p.email || '-'}`,
+        `Project city: ${p.city}`,
+        `System: ${p.system}`,
+        `Car spaces needed: ${p.spaces}`,
+        '',
+        'Site details:',
+        p.message,
+        '',
+        `Sent from: ${p.page_url}`,
+      ].join('\n');
+
+    const ERRORS: Record<string, string> = {
+      captcha: 'The security check expired. Please complete it again and resend.',
+      origin: 'This form can only be sent from the SmartPARX website.',
+      cooldown: 'You’ve just sent an enquiry. Please wait a minute before sending another.',
+      busy: 'We’re receiving a lot of enquiries right now. Please try again shortly, or call us.',
+      name: 'Please enter your name (letters only).',
+      phone: 'Please enter a valid phone number.',
+      email: 'Please check your email address.',
+      links: 'Please remove links from the form.',
+    };
+
+    // text/plain avoids a CORS preflight, which Apps Script web apps don't answer.
+    const send = async (payload: Record<string, string>) => {
+      const r = await fetch(cfg.endpoint, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
+      return (await r.json()) as { ok: boolean; reference?: string; emailed?: boolean; error?: string };
+    };
+
+    form.addEventListener('input', (e) => {
+      const el = e.target as HTMLInputElement;
+      if (el.getAttribute('aria-invalid') === 'true' && el.checkValidity()) el.removeAttribute('aria-invalid');
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.className = 'hidden';
+
+      const fd = new FormData(form);
+      // Bots: filled the honeypot or submitted inhumanly fast. Pretend success so they don't adapt.
+      if (fd.get('company_website') || Date.now() - loadedAt < MIN_FILL_MS) {
+        form.reset();
+        show('ok', '<strong class="block font-semibold">Thank you. Your enquiry is in.</strong>');
+        return;
+      }
+
+      const recent = history();
+      if (recent.length && Date.now() - Math.max(...recent) < COOLDOWN_MS) {
+        show('error', 'You’ve just sent an enquiry. Please wait a minute before sending another, or call us.');
+        return;
+      }
+      if (recent.length >= DAILY_MAX) {
+        show('error', `You’ve sent several enquiries today. Please call <a class="underline" href="tel:${form.dataset.phoneLink}">${form.dataset.phone}</a> instead.`);
+        return;
+      }
+
+      const raw = (k: string) => String(fd.get(k) ?? '');
+      const name = oneLine(raw('name'), LIMITS.name);
+      const phone = oneLine(raw('phone'), LIMITS.phone);
+      const phoneDigits = phone.replace(/\D/g, '');
+      const email = oneLine(raw('email'), LIMITS.email).toLowerCase();
+      const city = oneLine(raw('city'), LIMITS.city);
+      const spaces = oneLine(raw('spaces'), LIMITS.spaces).replace(/\D/g, '');
+      const message = multiLine(raw('message'), LIMITS.message);
+      // Only accept a system that is actually in the list.
+      const system = [...select.options].some((o) => o.value === raw('system')) ? raw('system') : 'Not specified';
+
+      const errors: [string, string][] = [];
+      if (!NAME_RE.test(name)) errors.push(['name', 'Please enter your name (letters only).']);
+      if (phoneDigits.length < 10 || phoneDigits.length > 13) errors.push(['phone', 'Please enter a valid phone number.']);
+      if (email && !EMAIL_RE.test(email)) errors.push(['email', 'Please check your email address.']);
+      if (hasLink(city)) errors.push(['city', 'Please enter just the city name.']);
+      if ((message.match(/https?:\/\//gi) ?? []).length > 1) errors.push(['message', 'Please remove links from your message.']);
+
+      form.querySelectorAll('[aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
+      if (errors.length) {
+        errors.forEach(([id]) => form.querySelector(`#${id}`)?.setAttribute('aria-invalid', 'true'));
+        form.querySelector<HTMLElement>(`#${errors[0][0]}`)?.focus();
+        show('error', errors.map(([, m]) => m).join(' '));
+        return;
+      }
+
+      const token = configured ? captcha()?.getResponse(captchaId) : undefined;
+      if (configured && !token) {
+        show('error', 'Please complete the security check above the button.');
+        return;
+      }
+      const params: Record<string, string> = {
+        reference: reference(),
+        name,
+        phone,
+        phone_link: `+${phoneDigits.length === 10 ? `91${phoneDigits}` : phoneDigits}`,
+        whatsapp: phoneDigits.length === 10 ? `91${phoneDigits}` : phoneDigits,
+        email,
+        city: city || 'Not specified',
+        system,
+        spaces: spaces || 'Not specified',
+        message: message || 'No additional details provided.',
+        // Path only: never forward query strings into the email.
+        page_url: location.origin + location.pathname,
+        // Home page of whichever deployment sent the enquiry (GitHub Pages now, the real domain later).
+        site_url: new URL(import.meta.env.BASE_URL, location.origin).href,
+      };
+
+      if (!configured) {
+        // Email service not set up yet: hand the same template to the visitor's mail app.
+        const subject = `New enquiry ${params.reference} - ${params.system}, ${params.city}`;
+        location.href = `mailto:${form.dataset.to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(textBody(params))}`;
+        show('ok', `Your mail app should open with the enquiry ready to send. If it doesn't, email us at <a class="underline" href="mailto:${form.dataset.to}">${form.dataset.to}</a>.`);
+        return;
+      }
+
+      busy(true);
+      try {
+        const res = await send({ ...params, turnstileToken: token! });
+        captcha()?.reset(captchaId); // tokens are single-use
+        if (!res.ok) {
+          show('error', ERRORS[res.error ?? ''] ?? `Sorry, the enquiry couldn’t be sent. Please call <a class="underline" href="tel:${form.dataset.phoneLink}">${form.dataset.phone}</a>.`);
+          return;
+        }
+        remember();
+        form.reset();
+        show(
+          'ok',
+          `<strong class="block font-semibold">Thank you, ${escape(params.name)}. Your enquiry is in.</strong>
+           Reference <span class="font-mono">${escape(res.reference ?? '')}</span>. Our engineering team will contact you within one working day${res.emailed ? ', and we’ve emailed you a copy' : ''}.`,
+        );
+      } catch {
+        captcha()?.reset(captchaId);
+        show(
+          'error',
+          `Sorry, the enquiry couldn’t be sent. Please call <a class="underline" href="tel:${form.dataset.phoneLink}">${form.dataset.phone}</a>, WhatsApp us, or email <a class="underline" href="mailto:${form.dataset.to}">${form.dataset.to}</a>.`,
+        );
+      } finally {
+        busy(false);
+      }
+    });
+  }
 </script>

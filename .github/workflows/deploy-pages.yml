@@ -37,6 +37,10 @@ jobs:
           BASE_PATH: /${{ github.event.repository.name }}
           # Preview only: keep it out of search results until the real domain goes live.
           PUBLIC_NOINDEX: 'true'
+          # Enquiry form (see apps-script/README.md). Set under Settings → Secrets and variables → Actions → Variables.
+          # Both are public by design; the secrets live in Apps Script's Script properties.
+          PUBLIC_FORM_ENDPOINT: ${{ vars.FORM_ENDPOINT }}
+          PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.TURNSTILE_SITE_KEY }}
 
       - uses: actions/upload-pages-artifact@v3
         with:
